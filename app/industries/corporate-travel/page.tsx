@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import IndustryPage from "../../components/IndustryPage";
+export const metadata: Metadata = { title: "Corporate Travel Security", description: "Executive travel security, secure transport and journey management for business travellers across West Africa." };
+export default function Page(){return <IndustryPage eyebrow="Business travel security" title="Corporate Travel" intro="Structured security and mobility support for executives, delegations, project teams and visiting corporate personnel." imageClass="industryCorporateTravel" challenges={["Unfamiliar operating environments","Tight itineraries","Multiple travellers","Airport and hotel transitions","VIP visibility","Last-minute changes"]} capabilities={["Executive protection","Secure airport transfers","Itinerary risk review","Driver and vehicle coordination","Movement monitoring","Single-point operational contact"]}/>;}
