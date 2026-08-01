@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import LocationPage from "../../components/LocationPage";
+
+export const metadata: Metadata = { title:"Security Services in Port Harcourt", description:"Secure transportation, journey management, executive protection and project movement support in Port Harcourt, Nigeria." };
+
+export default function PortHarcourtPage(){return <LocationPage city="Port Harcourt" eyebrow="Security services in Port Harcourt" title="Security and journey management for energy-sector operations." intro="Coordinated support for airport transfers, project personnel, executive visits, contractor movements and travel linked to energy and infrastructure operations in the Niger Delta region." heroClass="portHarcourtHero" focus={["Airport-to-hotel and site movements","Project and contractor schedules","Remote-route feasibility","Vehicle and driver requirements","Journey monitoring and escalation","Weather, timing and contingency factors"]} services={["Secure transportation","Journey management","Executive protection","Airport coordination","Project security support","Risk assessment"]} environments={["Energy-sector business visits","Project personnel rotations","Airport and hotel transfers","Corporate and contractor meetings","Remote-site movement planning","Time-sensitive operational schedules"]}/>}
