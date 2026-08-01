@@ -15,6 +15,7 @@ import "./industry-pages.css";
 import "./trust.css";
 import "./services-overview.css";
 import "./coverage.css";
+import "./locations.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://security-solutions.africa"),
