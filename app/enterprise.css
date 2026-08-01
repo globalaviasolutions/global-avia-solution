@@ -1,0 +1,31 @@
+.enterpriseHeader{background:linear-gradient(180deg,rgba(4,6,6,.94),rgba(4,6,6,.7));border-bottom-color:rgba(224,189,120,.16)}
+.enterpriseHero{min-height:760px;position:relative;display:flex;align-items:flex-end;padding:160px 7vw 90px;background-size:cover;background-position:center}
+.enterpriseHero h1{font-size:clamp(54px,7vw,98px);line-height:.98;max-width:1100px;margin:18px 0 26px}
+.leadershipHero{background-image:linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.35)),url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2200&q=88')}
+.emergencyHero{background-image:linear-gradient(90deg,rgba(15,0,0,.97),rgba(0,0,0,.38)),url('https://images.unsplash.com/photo-1516841273335-e39b37888115?auto=format&fit=crop&w=2200&q=88')}
+.resourcesHero{background-image:linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.35)),url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2200&q=88')}
+.guideHero{background-image:linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.35)),url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2200&q=88')}
+.enterpriseIntro{padding:100px 7vw;display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:end;background:#090909}
+.enterpriseIntro h2,.enterpriseSplit h2{font-size:clamp(40px,5vw,66px);line-height:1.04;margin:14px 0}
+.leadershipGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.08);padding:1px}
+.leadershipGrid article{min-height:330px;padding:46px;background:linear-gradient(145deg,#151515,#090909)}
+.leadershipGrid article>span,.resourceGrid article>span{color:var(--gold);font-size:12px;letter-spacing:.15em;text-transform:uppercase}
+.leadershipGrid h2{font-size:38px;margin:50px 0 14px}
+.enterpriseSplit{padding:100px 7vw;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;background:linear-gradient(120deg,#0b0b0b,#19120c)}
+.enterpriseList{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+.enterpriseList span{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.09);color:#ddd}
+.enterpriseList span::before{content:'✓';color:var(--gold);margin-right:10px}
+.emergencyNav,.emergencyButton{background:#8f1e1e!important;color:#fff!important;border:1px solid #d55!important;padding:14px 20px}
+.emergencyEyebrow{color:#ffb0a8}
+.urgentNotice{padding:28px 7vw;display:grid;grid-template-columns:180px 1fr;gap:30px;align-items:center;background:#5b1212;border-block:1px solid rgba(255,255,255,.18)}
+.urgentNotice strong{text-transform:uppercase;letter-spacing:.16em}.urgentNotice p{margin:0;color:#fff}
+.emergencyGrid article{background:linear-gradient(145deg,#171010,#090909)}
+.compactProcess{grid-template-columns:repeat(2,1fr)}
+.resourceGrid{padding:0 6vw 110px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#090909}
+.resourceGrid article{min-height:370px;padding:36px;background:linear-gradient(145deg,#151515,#0a0a0a);display:flex;flex-direction:column}
+.resourceNumber{font:500 42px Georgia,serif;color:rgba(224,189,120,.35);margin-bottom:36px}
+.resourceGrid h2{font-size:32px;margin:18px 0 12px}.resourceGrid a{color:var(--gold-light);margin-top:auto}
+.guideContent{max-width:1050px;margin:0 auto;padding:100px 6vw 120px}.guideContent h2{font-size:38px;margin:54px 0 14px}.guideDisclaimer{padding:22px;border-left:3px solid var(--gold);background:#121212}.guideList{margin:24px 0 60px}.guideCta{padding:45px;border:1px solid var(--line);background:linear-gradient(135deg,#15110d,#0b0b0b)}
+.globalEmergencyLink{position:fixed;z-index:34;left:22px;bottom:22px;padding:15px 18px;background:#8f1e1e;color:#fff;border:1px solid #d55;text-transform:uppercase;letter-spacing:.1em;font-size:11px;box-shadow:0 12px 30px rgba(0,0,0,.45)}
+@media(max-width:900px){.enterpriseIntro,.enterpriseSplit{grid-template-columns:1fr}.resourceGrid{grid-template-columns:repeat(2,1fr)}.enterpriseList{grid-template-columns:1fr}}
+@media(max-width:640px){.enterpriseHero{min-height:660px;padding:135px 20px 70px}.enterpriseHero h1{font-size:48px}.enterpriseIntro,.enterpriseSplit{padding:75px 20px;gap:28px}.leadershipGrid,.resourceGrid{grid-template-columns:1fr}.leadershipGrid article{min-height:270px;padding:30px}.resourceGrid{padding:0 20px 75px}.urgentNotice{grid-template-columns:1fr;padding:24px 20px}.compactProcess{grid-template-columns:1fr}.guideContent{padding:75px 20px}.globalEmergencyLink{left:14px;bottom:14px;padding:12px 14px}}
