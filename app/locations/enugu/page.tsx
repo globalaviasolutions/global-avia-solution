@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import LocationPage from "../../components/LocationPage";
+
+export const metadata: Metadata = { title:"Security Services in Enugu", description:"Executive protection, secure transportation, airport support and journey management services in Enugu, Nigeria." };
+
+export default function EnuguPage(){return <LocationPage city="Enugu" eyebrow="Security services in Enugu" title="Executive security and journey support in Enugu." intro="Planned support for airport arrivals, corporate visits, government-facing programmes and regional personnel movements across south-eastern Nigeria." heroClass="enuguHero" focus={["Airport and city transfer planning","Regional and intercity route assessment","Meeting and destination schedules","Traveller profile and confidentiality","Communications and escalation planning","Local capability and lawful availability"]} services={["Executive protection","Airport support","Secure transportation","Journey management","Corporate security","Security consulting"]} environments={["Airport and hotel movements","Corporate and government visits","Regional business programmes","Project personnel transfers","Conferences and events","Multi-location schedules"]}/>}
