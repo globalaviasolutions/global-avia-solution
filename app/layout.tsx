@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MobileMenu from "./components/MobileMenu";
+import GlobalEffects from "./components/GlobalEffects";
 import "./globals.css";
 import "./service-pages.css";
 import "./additional.css";
@@ -8,6 +9,7 @@ import "./brand-v2.css";
 import "./professional-images.css";
 import "./professional-imagery.css";
 import "./photo-upgrade.css";
+import "./motion.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://security-solutions.africa"),
@@ -48,6 +50,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         {children}
+        <GlobalEffects />
         <MobileMenu />
       </body>
     </html>
