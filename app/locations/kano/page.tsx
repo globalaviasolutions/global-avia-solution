@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import LocationPage from "../../components/LocationPage";
+
+export const metadata: Metadata = { title:"Security Services in Kano", description:"Executive protection, secure transportation, airport support and journey management services in Kano, Nigeria." };
+
+export default function KanoPage(){return <LocationPage city="Kano" eyebrow="Security services in Kano" title="Secure movements and operational support in Kano." intro="Structured planning for airport arrivals, executive visits, commercial programmes and personnel movements across one of northern Nigeria’s principal business centres." heroClass="kanoHero" focus={["Airport arrival and departure coordination","Urban and intercity route planning","Traveller profile and schedule sensitivity","Hotel, office and meeting locations","Contingency and communications planning","Lawful resource and partner availability"]} services={["Executive protection","Airport support","Secure transportation","Journey management","Corporate security","Risk assessment"]} environments={["International and domestic arrivals","Commercial and industrial visits","Corporate delegations","Hotel and conference movements","Intercity journey planning","Multi-stop executive schedules"]}/>}
