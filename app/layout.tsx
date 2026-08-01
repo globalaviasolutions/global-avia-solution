@@ -7,6 +7,7 @@ import "./mobile-form.css";
 import "./brand-v2.css";
 import "./professional-images.css";
 import "./professional-imagery.css";
+import "./photo-upgrade.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://security-solutions.africa"),
