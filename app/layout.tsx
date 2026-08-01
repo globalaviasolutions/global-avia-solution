@@ -3,6 +3,7 @@ import GlobalEffects from "./components/GlobalEffects";
 import StructuredData from "./components/StructuredData";
 import SiteFooter from "./components/SiteFooter";
 import SiteHeader from "./components/SiteHeader";
+import CookieConsent from "./components/CookieConsent";
 import "./globals.css";
 import "./service-pages.css";
 import "./additional.css";
@@ -23,6 +24,7 @@ import "./interactive-map.css";
 import "./global-footer.css";
 import "./global-header.css";
 import "./contact-upgrade.css";
+import "./cookie-consent.css";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -106,6 +108,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteHeader />
         {children}
         <SiteFooter />
+        <CookieConsent />
         <GlobalEffects />
       </body>
     </html>
