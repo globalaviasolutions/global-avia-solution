@@ -1,0 +1,48 @@
+.heroV2 {
+  background:
+    linear-gradient(90deg,rgba(3,6,6,.97) 0%,rgba(4,7,7,.78) 48%,rgba(4,7,7,.24) 100%),
+    url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=86') center/cover no-repeat;
+}
+.heroV2::before { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 68%,rgba(0,0,0,.72)); }
+.heroGlassPanel { position:absolute; z-index:3; right:6vw; bottom:68px; width:min(360px,32vw); padding:30px; border:1px solid rgba(224,189,120,.35); background:rgba(8,11,11,.58); backdrop-filter:blur(18px); box-shadow:0 24px 70px rgba(0,0,0,.35); }
+.heroGlassPanel .panelNumber { color:var(--gold-light); letter-spacing:.16em; font-size:12px; }
+.heroGlassPanel p { color:#eee; font:500 25px/1.25 Georgia,serif; margin:28px 0; }
+.heroGlassPanel a { color:var(--gold-light); font-size:13px; }
+
+.reasonsSection { padding:110px 6vw; background:linear-gradient(135deg,#0b0e0e,#15110c); }
+.reasonsGrid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,.08); }
+.reasonsGrid article { min-height:290px; padding:34px; background:rgba(8,9,9,.92); transition:.3s ease; }
+.reasonsGrid article:hover { transform:translateY(-5px); background:#14110d; }
+.reasonsGrid strong { display:inline-flex; min-width:58px; height:36px; align-items:center; color:var(--gold-light); border-bottom:1px solid var(--gold); letter-spacing:.12em; }
+.reasonsGrid h3 { font-size:28px; margin:42px 0 14px; }
+
+.coverageV2 { display:grid; grid-template-columns:1.08fr .92fr; min-height:760px; background:#0c0f0f; }
+.africaMap { position:relative; overflow:hidden; min-height:680px; background:radial-gradient(circle at 48% 48%,rgba(200,163,95,.23),transparent 34%),linear-gradient(145deg,#17130d,#060808); }
+.africaMap::before { content:''; position:absolute; inset:11% 18% 8%; background:linear-gradient(150deg,#d9b66e,#8b6936); clip-path:polygon(47% 0,62% 5%,72% 16%,85% 29%,81% 43%,70% 53%,68% 68%,58% 82%,51% 100%,39% 88%,32% 73%,20% 60%,12% 43%,18% 26%,31% 14%,39% 3%); opacity:.9; box-shadow:0 0 80px rgba(200,163,95,.22); }
+.mapAura { position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,.025),transparent); transform:skewX(-18deg); }
+.mapTitle { position:absolute; left:42px; top:42px; text-transform:uppercase; letter-spacing:.2em; color:var(--gold-light); font-size:12px; }
+.mapPoint { position:absolute; z-index:3; display:flex; align-items:center; gap:8px; color:#fff; font-size:12px; text-shadow:0 2px 8px #000; }
+.mapPoint i { width:10px; height:10px; border-radius:50%; background:#fff; border:3px solid var(--gold); box-shadow:0 0 0 8px rgba(200,163,95,.18); animation:pulsePoint 2.4s infinite; }
+.point1{left:44%;top:50%}.point2{left:34%;top:45%}.point3{left:27%;top:48%}.point4{left:22%;top:36%}.point5{left:39%;top:46%}.point6{left:53%;top:52%}
+@keyframes pulsePoint{50%{box-shadow:0 0 0 14px rgba(200,163,95,.03)}}
+.marketList { display:grid; grid-template-columns:repeat(2,1fr); gap:0 22px; margin:24px 0 34px; }
+.marketList span { padding:13px 0; border-bottom:1px solid rgba(255,255,255,.08); color:#ddd; }
+.marketList span::before { content:'↗'; color:var(--gold); margin-right:9px; }
+
+@media(max-width:1000px){
+  .heroGlassPanel{display:none}
+  .reasonsGrid{grid-template-columns:repeat(2,1fr)}
+  .coverageV2{grid-template-columns:1fr}
+  .africaMap{min-height:600px}
+}
+@media(max-width:640px){
+  .heroV2 h1{font-size:48px}
+  .reasonsSection{padding:75px 20px}
+  .reasonsGrid{grid-template-columns:1fr}
+  .reasonsGrid article{min-height:230px}
+  .africaMap{min-height:470px}
+  .africaMap::before{inset:14% 10% 8%}
+  .coverageV2 .coverageCopy{padding:75px 20px}
+  .marketList{grid-template-columns:1fr}
+  .mapPoint{font-size:10px}
+}
