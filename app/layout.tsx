@@ -6,15 +6,15 @@ import "./additional.css";
 import "./mobile-form.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://global-avia-solution.vercel.app"),
-  title: "Global Avia Solution | Security Services in Nigeria",
+  metadataBase: new URL("https://security-solutions.africa"),
+  title: "Africa Security Solutions | Professional Security Across Africa",
   description:
-    "Executive protection, airport and crew security, secure transportation, corporate security, journey management, and security consulting across Nigeria.",
+    "Executive protection, secure transportation, corporate security, journey management, airport and crew security, and risk consulting across Nigeria and West Africa.",
   openGraph: {
-    title: "Global Avia Solution",
-    description: "Premium security coordination and aviation support across Nigeria.",
-    url: "https://global-avia-solution.vercel.app",
-    siteName: "Global Avia Solution",
+    title: "Africa Security Solutions",
+    description: "Trusted security. African expertise. International standards.",
+    url: "https://security-solutions.africa",
+    siteName: "Africa Security Solutions",
     type: "website",
   },
 };
