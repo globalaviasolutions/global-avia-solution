@@ -22,6 +22,7 @@ import "./enterprise.css";
 import "./interactive-map.css";
 import "./global-footer.css";
 import "./global-header.css";
+import "./contact-upgrade.css";
 
 export const viewport: Viewport = {
   width: "device-width",
