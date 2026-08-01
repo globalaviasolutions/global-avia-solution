@@ -18,6 +18,7 @@ import "./coverage.css";
 import "./locations.css";
 import "./standards.css";
 import "./enterprise.css";
+import "./interactive-map.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://security-solutions.africa"),
