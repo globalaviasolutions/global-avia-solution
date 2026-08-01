@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import IndustryPage from "../../components/IndustryPage";
+export const metadata: Metadata = { title: "Embassies and NGO Security", description: "Discreet security coordination for diplomatic missions, NGOs and international organisations in West Africa." };
+export default function Page(){return <IndustryPage eyebrow="Diplomatic and NGO support" title="Embassies & NGOs" intro="Discreet, accountable support for diplomatic personnel, development organisations and international missions." imageClass="industryEmbassies" challenges={["Sensitive traveller profiles","Multi-location programmes","Confidential movements","Duty of care obligations","Field visit exposure","Rapid schedule changes"]} capabilities={["Executive and team protection","Secure transport coordination","Field movement planning","Arrival and departure support","Risk briefings","Emergency communication support"]}/>;}
