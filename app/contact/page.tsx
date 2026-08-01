@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ContactForm from "../components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Global Avia Solution",
@@ -34,17 +35,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <form className="contactForm" action="mailto:globalaviasolutions@gmail.com" method="post" encType="text/plain">
-          <label><span>Name *</span><input name="name" required /></label>
-          <label><span>Company</span><input name="company" /></label>
-          <label><span>Email *</span><input type="email" name="email" required /></label>
-          <label><span>Phone / WhatsApp</span><input name="phone" /></label>
-          <label className="full"><span>Service</span><select name="service"><option>Executive Protection</option><option>Airport & Crew Security</option><option>Secure Transportation</option><option>Corporate Security</option><option>Journey Management</option><option>Security Consulting</option></select></label>
-          <label><span>City / Location</span><input name="location" /></label>
-          <label><span>Required Date</span><input type="date" name="date" /></label>
-          <label className="full"><span>Assignment Details *</span><textarea name="details" rows={7} required /></label>
-          <button className="button primary full" type="submit">Prepare Email Request</button>
-        </form>
+        <ContactForm />
       </section>
     </main>
   );
