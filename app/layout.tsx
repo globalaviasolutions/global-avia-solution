@@ -13,6 +13,7 @@ import "./photo-upgrade.css";
 import "./motion.css";
 import "./industry-pages.css";
 import "./trust.css";
+import "./services-overview.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://security-solutions.africa"),
