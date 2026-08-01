@@ -8,12 +8,15 @@ const revealSelector = [
   ".roleGrid article", ".serviceIntroSection > *", ".serviceFeaturePanel > *",
   ".coverageCopy > *", ".copyPanel > *", ".contactPageCopy > *", ".contactForm",
   ".legalContent > *", ".careerNotice", ".leadershipGrid article", ".resourceGrid article",
-  ".enterpriseIntro > *", ".enterpriseSplit > *",
+  ".enterpriseIntro > *", ".enterpriseSplit > *", ".globalFooterGrid > *", ".footerLead > *",
 ].join(",");
 
 export default function GlobalEffects() {
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const main = document.querySelector<HTMLElement>("main");
+    if (main && !main.id) main.id = "main-content";
+
     const header = document.querySelector<HTMLElement>(".siteHeader");
     const updateHeader = () => header?.classList.toggle("headerScrolled", window.scrollY > 24);
 
