@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import LocationPage from "../../components/LocationPage";
+
+export const metadata: Metadata = { title:"Security Services in Uyo", description:"Executive protection, airport transfers, secure transportation and project movement support in Uyo, Nigeria." };
+
+export default function UyoPage(){return <LocationPage city="Uyo" eyebrow="Security services in Uyo" title="Security coordination and secure mobility in Uyo." intro="Tailored support for executive arrivals, corporate visits, hospitality programmes and project-related movements across Akwa Ibom State." heroClass="uyoHero" focus={["Airport and hotel transfer timing","Urban and regional route assessment","Executive and project schedules","Venue and destination coordination","Communications and contingency planning","Resource availability and legal requirements"]} services={["Executive protection","Airport and crew support","Secure transportation","Journey management","Corporate security","Security consulting"]} environments={["Airport and hotel movements","Corporate and government visits","Energy-sector programmes","Hospitality and event venues","Regional project movements","Executive multi-stop schedules"]}/>}
