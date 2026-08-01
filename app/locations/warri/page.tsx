@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import LocationPage from "../../components/LocationPage";
+
+export const metadata: Metadata = { title:"Security Services in Warri", description:"Secure transportation, executive protection, project movement and journey management services in Warri, Nigeria." };
+
+export default function WarriPage(){return <LocationPage city="Warri" eyebrow="Security services in Warri" title="Security support for energy and project movements in Warri." intro="Operational planning for executives, technical personnel, contractors and project teams moving through Delta State’s energy and industrial environment." heroClass="warriHero" focus={["Airport and road transfer coordination","Energy and industrial destination planning","Personnel rotation schedules","Urban and remote-route assessment","Contingency and escalation procedures","Verified partner and resource availability"]} services={["Executive protection","Secure transportation","Journey management","Project movement support","Corporate security","Risk assessment"]} environments={["Energy and industrial operations","Airport and hotel transfers","Project personnel rotations","Corporate and technical visits","Regional road journeys","Multi-vehicle movement plans"]}/>}
