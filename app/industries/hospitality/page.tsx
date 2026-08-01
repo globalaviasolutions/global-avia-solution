@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import IndustryPage from "../../components/IndustryPage";
+export const metadata: Metadata = { title: "Hospitality Security", description: "Guest, executive, event and secure transportation support for hotels and hospitality operators in West Africa." };
+export default function Page(){return <IndustryPage eyebrow="Hospitality security" title="Hospitality" intro="Discreet security support for hotels, premium guests, conferences, executive visits and hospitality operations." imageClass="industryHospitality" challenges={["VIP guest privacy","High-traffic public areas","Events and conferences","Airport-to-hotel transitions","Reputation sensitivity","Guest itinerary changes"]} capabilities={["VIP arrival coordination","Executive protection","Secure guest transportation","Event security planning","Hotel liaison","Emergency response coordination"]}/>;}
