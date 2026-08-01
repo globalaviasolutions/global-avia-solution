@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./service-pages.css";
 
 export const metadata: Metadata = {
   title: "Global Avia Solution | Security Services in Nigeria",
