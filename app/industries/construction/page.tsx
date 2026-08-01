@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import IndustryPage from "../../components/IndustryPage";
+export const metadata: Metadata = { title: "Construction Project Security", description: "Security planning for construction projects, visiting teams, sites and personnel movements in Nigeria and West Africa." };
+export default function Page(){return <IndustryPage eyebrow="Project security" title="Construction" intro="Security planning for project leadership, visiting specialists, site movements and business-critical construction activity." imageClass="industryConstruction" challenges={["Distributed project sites","Workforce and contractor access","Equipment and asset exposure","Executive inspections","Route reliability","Programme disruption"]} capabilities={["Project risk assessment","Site visit security","Secure personnel transport","Access-control advisory","Journey management","Contingency and escalation planning"]}/>;}
