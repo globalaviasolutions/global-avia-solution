@@ -1,0 +1,93 @@
+.heroV2 {
+  background:
+    linear-gradient(90deg,rgba(3,6,6,.97) 0%,rgba(4,7,7,.80) 46%,rgba(4,7,7,.26) 100%),
+    url('https://unsplash.com/photos/2uHWaVj7VV4/download?force=true&w=2200') center 32%/cover no-repeat;
+}
+
+.serviceExecutive,
+.executiveVisual {
+  background-image:
+    linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.18)),
+    url('https://unsplash.com/photos/2uHWaVj7VV4/download?force=true&w=1800');
+  background-position:center 20%;
+}
+
+.serviceAirport,
+.airportVisual {
+  background-image:
+    linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.20)),
+    url('https://unsplash.com/photos/-0DVsjv1AHc/download?force=true&w=1800');
+  background-position:center;
+}
+
+.serviceTransport,
+.transportVisual {
+  background-image:
+    linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.18)),
+    url('https://unsplash.com/photos/wP-1ePY3m0w/download?force=true&w=1800');
+  background-position:center 58%;
+}
+
+.serviceCorporate,
+.serviceCorporateHero {
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.90),rgba(0,0,0,.28)),
+    url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=88');
+  background-position:center;
+}
+
+.serviceJourney,
+.serviceJourneyHero {
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.30)),
+    url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=88');
+  background-position:center;
+}
+
+.serviceConsulting,
+.serviceConsultingHero {
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.30)),
+    url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2000&q=88');
+  background-position:center;
+}
+
+.imagePanel,
+.aboutHero {
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.86),rgba(0,0,0,.24)),
+    url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=2000&q=88');
+  background-position:center;
+}
+
+.contactHero {
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.28)),
+    url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=88');
+  background-position:center;
+}
+
+.contentHero {
+  background-image:
+    linear-gradient(105deg,rgba(0,0,0,.94),rgba(0,0,0,.50)),
+    url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2200&q=88');
+  background-position:center;
+}
+
+.careersHero {
+  background-image:
+    linear-gradient(105deg,rgba(0,0,0,.94),rgba(0,0,0,.45)),
+    url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2200&q=88');
+  background-position:center;
+}
+
+.serviceCard {
+  filter:saturate(.88) contrast(1.04);
+}
+
+@media (max-width:640px) {
+  .heroV2 { background-position:58% center; }
+  .serviceExecutive,.executiveVisual { background-position:center 18%; }
+  .serviceAirport,.airportVisual { background-position:center; }
+  .serviceTransport,.transportVisual { background-position:62% center; }
+}
