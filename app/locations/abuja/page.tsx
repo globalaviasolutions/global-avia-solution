@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import LocationPage from "../../components/LocationPage";
+
+export const metadata: Metadata = { title:"Security Services in Abuja", description:"Executive protection, diplomatic movement support, secure transportation and journey management in Abuja, Nigeria." };
+
+export default function AbujaPage(){return <LocationPage city="Abuja" eyebrow="Security services in Abuja" title="Discreet security support in Nigeria’s federal capital." intro="Professional planning for diplomatic visits, government-facing programmes, NGO operations, executive travel and international delegations operating in Abuja." heroClass="abujaHero" focus={["Airport and protocol coordination","Government and diplomatic schedules","Hotel, embassy and office movements","Route and venue assessment","Confidentiality and communications","Contingency and escalation planning"]} services={["Executive protection","Secure transportation","Journey management","Airport support","Corporate security","Risk consulting"]} environments={["Diplomatic and embassy movements","Government-facing programmes","NGO and international missions","Executive business visits","Conferences and official events","Multi-venue delegation schedules"]}/>}
