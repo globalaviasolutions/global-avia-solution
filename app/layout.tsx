@@ -5,6 +5,7 @@ import SiteFooter from "./components/SiteFooter";
 import SiteHeader from "./components/SiteHeader";
 import CookieConsent from "./components/CookieConsent";
 import SecurityAssistant from "./components/SecurityAssistant";
+import RegionalNetworkMount from "./components/RegionalNetworkMount";
 import "./globals.css";
 import "./service-pages.css";
 import "./additional.css";
@@ -29,6 +30,7 @@ import "./cookie-consent.css";
 import "./capability-statement.css";
 import "./client-portal.css";
 import "./security-assistant.css";
+import "./regional-network.css";
 
 export const viewport: Viewport = { width:"device-width", initialScale:1, maximumScale:5, themeColor:"#0b0b0b", colorScheme:"dark" };
 export const metadata: Metadata = {
@@ -42,4 +44,4 @@ export const metadata: Metadata = {
   openGraph:{title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",url:"https://security-solutions.africa",siteName:"Africa Security Solutions",images:[{url:"/opengraph-image",width:1200,height:630,alt:"Africa Security Solutions"}],locale:"en_GB",type:"website"},
   twitter:{card:"summary_large_image",title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",images:["/opengraph-image"]},
 };
-export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body><a className="skipLink" href="#main-content">Skip to main content</a><StructuredData/><SiteHeader/>{children}<SiteFooter/><CookieConsent/><SecurityAssistant/><GlobalEffects/></body></html>}
+export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body><a className="skipLink" href="#main-content">Skip to main content</a><StructuredData/><SiteHeader/>{children}<SiteFooter/><CookieConsent/><SecurityAssistant/><RegionalNetworkMount/><GlobalEffects/></body></html>}
