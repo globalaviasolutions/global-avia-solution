@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import LocationPage from "../../components/LocationPage";
+
+export const metadata: Metadata = { title:"Security Services in Lagos", description:"Executive protection, secure airport transfers, journey management and corporate security support in Lagos, Nigeria." };
+
+export default function LagosPage(){return <LocationPage city="Lagos" eyebrow="Security services in Lagos" title="Executive protection and secure mobility in Lagos." intro="Structured support for airport arrivals, corporate programmes, executive visits, hospitality movements and time-sensitive schedules across Nigeria’s principal commercial hub." heroClass="lagosHero" focus={["Airport arrival and departure timing","Victoria Island, Ikoyi and mainland routing","Hotel, office and meeting schedules","Traffic, route and contingency planning","Passenger profile and privacy requirements","Escalation and communications structure"]} services={["Executive protection","Airport and crew security","Secure transportation","Journey management","Corporate security","Security consulting"]} environments={["International airport arrivals","Corporate and executive programmes","Hotels and hospitality venues","Maritime and commercial districts","Conferences and private events","Multi-stop business schedules"]}/>}
