@@ -4,6 +4,7 @@ import "./globals.css";
 import "./service-pages.css";
 import "./additional.css";
 import "./mobile-form.css";
+import "./brand-v2.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://security-solutions.africa"),
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     "Executive protection, secure transportation, corporate security, journey management, airport and crew security, and risk consulting across Nigeria and West Africa.",
   openGraph: {
     title: "Africa Security Solutions",
-    description: "Trusted security. African expertise. International standards.",
+    description: "Securing Africa. Protecting global business.",
     url: "https://security-solutions.africa",
     siteName: "Africa Security Solutions",
     type: "website",
