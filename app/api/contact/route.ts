@@ -29,10 +29,7 @@ function escapeHtml(value: string) {
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as ContactPayload;
-
-    if (clean(body.website, 200)) {
-      return NextResponse.json({ message: "Request received." });
-    }
+    if (clean(body.website, 200)) return NextResponse.json({ message: "Request received." });
 
     const name = clean(body.name, 100);
     const email = clean(body.email, 160);
@@ -44,7 +41,7 @@ export async function POST(request: Request) {
 
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ message: "Email delivery is being configured. Please email globalaviasolutions@gmail.com directly." }, { status: 503 });
+      return NextResponse.json({ message: "Email delivery is being configured. Please email info@security-solutions.africa directly." }, { status: 503 });
     }
 
     const company = clean(body.company, 120);
@@ -52,21 +49,18 @@ export async function POST(request: Request) {
     const service = clean(body.service, 120);
     const location = clean(body.location, 120);
     const requiredDate = clean(body.date, 30);
-    const from = process.env.RESEND_FROM_EMAIL || "Global Avia Solution <onboarding@resend.dev>";
+    const from = process.env.RESEND_FROM_EMAIL || "Africa Security Solutions <onboarding@resend.dev>";
 
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from,
-        to: ["globalaviasolutions@gmail.com"],
+        to: ["info@security-solutions.africa"],
         reply_to: email,
         subject: `Security request: ${service || "General enquiry"} — ${name}`,
         html: `
-          <h2>New Global Avia Solution website request</h2>
+          <h2>New Africa Security Solutions website request</h2>
           <p><strong>Name:</strong> ${escapeHtml(name)}</p>
           <p><strong>Company:</strong> ${escapeHtml(company || "Not provided")}</p>
           <p><strong>Email:</strong> ${escapeHtml(email)}</p>
@@ -81,9 +75,8 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Resend error:", errorText);
-      return NextResponse.json({ message: "The request could not be delivered. Please email us directly." }, { status: 502 });
+      console.error("Resend error:", await response.text());
+      return NextResponse.json({ message: "The request could not be delivered. Please email info@security-solutions.africa directly." }, { status: 502 });
     }
 
     return NextResponse.json({ message: "Request sent successfully." });
