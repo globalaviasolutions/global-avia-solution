@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import IndustryPage from "../../components/IndustryPage";
+export const metadata: Metadata = { title: "Oil and Gas Security", description: "Security support for energy projects, personnel movements and corporate operations in Nigeria and West Africa." };
+export default function Page(){return <IndustryPage eyebrow="Energy sector security" title="Oil & Gas" intro="Risk-led security support for energy companies, visiting specialists, project teams and critical business movements." imageClass="industryOilGas" challenges={["Remote project locations","Personnel movement exposure","Contractor coordination","Executive site visits","Business continuity","Changing local conditions"]} capabilities={["Journey management","Secure transportation","Executive protection","Site visit coordination","Route and threat assessment","Incident escalation planning"]}/>;}
