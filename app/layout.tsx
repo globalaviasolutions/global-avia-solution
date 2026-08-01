@@ -25,6 +25,7 @@ import "./global-footer.css";
 import "./global-header.css";
 import "./contact-upgrade.css";
 import "./cookie-consent.css";
+import "./capability-statement.css";
 
 export const viewport: Viewport = {
   width: "device-width",
