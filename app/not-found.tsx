@@ -1,0 +1,3 @@
+export default function NotFound() {
+  return <main><header className="siteHeader"><a className="brand" href="/"><img src="/logo.svg" alt="Global Avia Solution" /></a><nav><a href="/">Home</a><a href="/faq">FAQ</a><a href="/contact">Contact</a></nav></header><section className="notFoundPage"><p className="eyebrow">404 · Page not found</p><h1>This route is not available.</h1><p>The page may have moved, or the address may be incorrect.</p><div className="actions"><a className="button primary" href="/">Return home</a><a className="button secondary" href="/contact">Contact us</a></div></section></main>;
+}
