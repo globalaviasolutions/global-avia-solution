@@ -31,6 +31,7 @@ import "./capability-statement.css";
 import "./client-portal.css";
 import "./security-assistant.css";
 import "./regional-network.css";
+import "./premium-motion.css";
 
 export const viewport: Viewport = { width:"device-width", initialScale:1, maximumScale:5, themeColor:"#0b0b0b", colorScheme:"dark" };
 export const metadata: Metadata = {
