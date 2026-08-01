@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://security-solutions.africa";
   const routes = [
-    "","/about","/contact","/faq","/careers","/privacy","/terms",
+    "","/about","/contact","/faq","/careers","/privacy","/terms","/industries",
     "/executive-protection","/airport-crew-security","/secure-transportation","/corporate-security","/journey-management","/security-consulting",
     "/industries/aviation","/industries/oil-gas","/industries/embassies-ngos","/industries/corporate-travel","/industries/construction","/industries/hospitality",
   ];
