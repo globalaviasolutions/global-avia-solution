@@ -1,0 +1,87 @@
+/* Refined motion system */
+.siteHeader {
+  transition: height .3s ease, background-color .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.siteHeader.headerScrolled {
+  height: 74px;
+  background: rgba(5,8,8,.96);
+  border-bottom-color: rgba(200,163,95,.22);
+  box-shadow: 0 14px 40px rgba(0,0,0,.28);
+}
+.siteHeader .brand img { transition: transform .3s ease, opacity .3s ease; }
+.siteHeader.headerScrolled .brand img { transform: scale(.94); }
+
+.heroContent > *, .heroGlassPanel {
+  animation: heroEnter .9s cubic-bezier(.2,.7,.2,1) both;
+}
+.heroContent > :nth-child(2) { animation-delay: .08s; }
+.heroContent > :nth-child(3) { animation-delay: .16s; }
+.heroContent > :nth-child(4) { animation-delay: .24s; }
+.heroContent > :nth-child(5) { animation-delay: .32s; }
+.heroGlassPanel { animation-delay: .38s; }
+@keyframes heroEnter {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.revealItem {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .75s cubic-bezier(.2,.7,.2,1) var(--reveal-delay, 0ms),
+    transform .75s cubic-bezier(.2,.7,.2,1) var(--reveal-delay, 0ms);
+}
+.revealItem.isRevealed { opacity: 1; transform: translateY(0); }
+
+.serviceCard,
+.reasonsGrid article,
+.industryGrid article,
+.audienceGrid article,
+.roleGrid article,
+.faqPageGrid article {
+  will-change: transform;
+}
+.serviceCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,.09) 48%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform .8s ease;
+  pointer-events: none;
+}
+.serviceCard:hover::after { transform: translateX(120%); }
+.serviceCard:hover { background-size: 106%; }
+.serviceCard { transition: transform .4s ease, border-color .4s ease, background-size .8s ease; }
+
+.button { position: relative; overflow: hidden; }
+.button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.14);
+  transform: translateX(-105%);
+  transition: transform .45s ease;
+}
+.button:hover::after { transform: translateX(0); }
+.button > * { position: relative; z-index: 1; }
+
+.textLink, .serviceBody a, footer a {
+  transition: color .25s ease, opacity .25s ease;
+}
+.textLink:hover, .serviceBody a:hover, footer a:hover { color: var(--gold-light); }
+
+.mapPoint i { transform-origin: center; }
+.africaMap::before { transition: filter .5s ease, transform .5s ease; }
+.africaMap:hover::before { filter: brightness(1.08); transform: scale(1.015); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .revealItem { opacity: 1; transform: none; }
+}
