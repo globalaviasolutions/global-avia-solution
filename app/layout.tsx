@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import MobileMenu from "./components/MobileMenu";
 import GlobalEffects from "./components/GlobalEffects";
 import StructuredData from "./components/StructuredData";
 import SiteFooter from "./components/SiteFooter";
+import SiteHeader from "./components/SiteHeader";
 import "./globals.css";
 import "./service-pages.css";
 import "./additional.css";
@@ -21,6 +21,7 @@ import "./standards.css";
 import "./enterprise.css";
 import "./interactive-map.css";
 import "./global-footer.css";
+import "./global-header.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://security-solutions.africa"),
@@ -33,5 +34,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><a className="skipLink" href="#main-content">Skip to main content</a><StructuredData />{children}<SiteFooter /><GlobalEffects /><MobileMenu /></body></html>;
+  return <html lang="en"><body><a className="skipLink" href="#main-content">Skip to main content</a><StructuredData /><SiteHeader />{children}<SiteFooter /><GlobalEffects /></body></html>;
 }
