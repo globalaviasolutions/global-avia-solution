@@ -3,6 +3,7 @@ import MobileMenu from "./components/MobileMenu";
 import "./globals.css";
 import "./service-pages.css";
 import "./additional.css";
+import "./mobile-form.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://global-avia-solution.vercel.app"),
