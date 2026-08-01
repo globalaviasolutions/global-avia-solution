@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import LocationPage from "../../components/LocationPage";
+
+export const metadata: Metadata = { title:"Security Services in Calabar", description:"Secure transportation, executive protection, airport support and journey management services in Calabar, Nigeria." };
+
+export default function CalabarPage(){return <LocationPage city="Calabar" eyebrow="Security services in Calabar" title="Secure travel and operational support in Calabar." intro="Coordinated support for airport arrivals, executive programmes, hospitality movements, events and project schedules across Cross River State." heroClass="calabarHero" focus={["Airport and destination coordination","Urban and regional route planning","Event and hospitality schedules","Traveller privacy requirements","Contingency and escalation procedures","Verified resource availability"]} services={["Executive protection","Airport support","Secure transportation","Journey management","Event security planning","Risk assessment"]} environments={["Airport and hotel transfers","Hospitality and tourism venues","Corporate and project visits","Conferences and private events","Regional road movements","Executive programmes"]}/>}
