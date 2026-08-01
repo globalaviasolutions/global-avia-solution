@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import IndustryPage from "../../components/IndustryPage";
+export const metadata: Metadata = { title: "Aviation Security", description: "Security coordination for airlines, crews, private aviation and airport movements across Nigeria and West Africa." };
+export default function Page(){return <IndustryPage eyebrow="Aviation security" title="Aviation" intro="Security coordination for airlines, flight crews, private aviation, airport transfers and time-critical movements." imageClass="industryAviation" challenges={["Crew safety and welfare","Airport-to-hotel movements","Irregular operations","High-profile passengers","Schedule changes","Local ground coordination"]} capabilities={["Crew protection","Secure airport transfers","Meet-and-assist coordination","Hotel movement planning","Executive aviation support","24/7 operational liaison"]}/>;}
