@@ -6,6 +6,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/about",
     "/contact",
+    "/faq",
+    "/careers",
+    "/privacy",
+    "/terms",
     "/executive-protection",
     "/airport-crew-security",
     "/secure-transportation",
@@ -18,6 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${base}${route}`,
     lastModified: new Date(),
     changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : 0.8,
+    priority: route === "" ? 1 : route === "/contact" ? 0.9 : 0.8,
   }));
 }
