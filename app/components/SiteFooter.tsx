@@ -26,7 +26,7 @@ export default function SiteFooter() {
 
         <div><h3>Services</h3><a href="/services">All Services</a><a href="/executive-protection">Executive Protection</a><a href="/airport-crew-security">Airport & Crew Security</a><a href="/secure-transportation">Secure Transportation</a><a href="/journey-management">Journey Management</a><a href="/security-consulting">Security Consulting</a></div>
         <div><h3>Operations</h3><a href="/industries">Industries</a><a href="/coverage">Coverage</a><a href="/locations">Locations</a><a href="/emergency-response">Emergency Requests</a><a href="/resources">Resources Centre</a><a href="/standards">Standards & Compliance</a></div>
-        <div><h3>Company</h3><a href="/about">About</a><a href="/leadership">Leadership Structure</a><a href="/careers">Careers</a><a href="/faq">FAQ</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><CookiePreferencesButton /></div>
+        <div><h3>Company</h3><a href="/about">About</a><a href="/leadership">Leadership Structure</a><a href="/capability-statement">Capability Statement</a><a href="/careers">Careers</a><a href="/faq">FAQ</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><CookiePreferencesButton /></div>
       </div>
 
       <div className="globalFooterBottom">
