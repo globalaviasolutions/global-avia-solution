@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import InteractiveNigeriaMap from "../components/InteractiveNigeriaMap";
 
 export const metadata: Metadata = {
   title: "Security Coverage in Nigeria and West Africa",
@@ -6,28 +7,20 @@ export const metadata: Metadata = {
     "Explore Africa Security Solutions coverage in Nigeria and our regional coordination model for selected assignments across West Africa.",
 };
 
-const nigeriaHubs = [
-  ["Lagos", "Corporate travel, airport movements, executive visits, hospitality and maritime-linked operations."],
-  ["Abuja", "Government-facing visits, diplomatic movements, conferences and executive protection support."],
-  ["Port Harcourt", "Oil and gas movements, project personnel support and secure ground transportation."],
-  ["Kano", "Northern Nigeria travel planning, airport coordination and journey management."],
-  ["Uyo & Calabar", "Project visits, hospitality support and regional personnel movements."],
-  ["Enugu & Warri", "Corporate travel, project mobility and route-specific operational planning."],
-];
-
 const regionalMarkets = ["Ghana", "Côte d’Ivoire", "Senegal", "Benin", "Cameroon"];
 
 export default function CoveragePage() {
   return (
     <main>
-      <header className="siteHeader">
+      <header className="siteHeader enterpriseHeader">
         <a className="brand" href="/" aria-label="Africa Security Solutions home"><img src="/logo.svg" alt="Africa Security Solutions" /></a>
-        <nav><a href="/services">Services</a><a href="/industries">Industries</a><a href="/coverage">Coverage</a><a href="/about">About</a><a href="/contact">Contact</a><a className="navCta" href="/contact">Plan an Operation</a></nav>
+        <nav><a href="/services">Services</a><a href="/industries">Industries</a><a href="/coverage">Coverage</a><a href="/locations">Locations</a><a href="/resources">Resources</a><a href="/contact">Contact</a><a className="navCta" href="/contact">Plan an Operation</a></nav>
       </header>
 
       <section className="coveragePageHero">
         <div className="coveragePageOverlay" />
         <div className="serviceHeroContent">
+          <nav className="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><span>Coverage</span></nav>
           <p className="eyebrow">Regional capability</p>
           <h1>Nigeria first. Regional by design.</h1>
           <p className="lead">Our primary operating focus is Nigeria, supported by a scalable coordination model for selected assignments across West Africa.</p>
@@ -35,17 +28,12 @@ export default function CoveragePage() {
         </div>
       </section>
 
-      <nav className="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>→</span><span>Coverage</span></nav>
-
       <section className="coverageIntro">
         <div><p className="eyebrow">Operating model</p><h2>Coverage depends on assessment, timing and lawful availability.</h2></div>
         <p>Every request is reviewed against location, route, timing, traveller profile, partner capability and local requirements. Website coverage information does not constitute automatic service confirmation.</p>
       </section>
 
-      <section className="nigeriaCoverage">
-        <div className="coverageMapPanel"><span className="mapTitle">Nigeria</span><div className="nigeriaShape" /><div className="coveragePulse pulseLagos" /><div className="coveragePulse pulseAbuja" /><div className="coveragePulse pulsePH" /><div className="coveragePulse pulseKano" /></div>
-        <div className="coverageHubList"><p className="eyebrow">Primary Nigerian hubs</p><h2>Support around major commercial and aviation centres.</h2>{nigeriaHubs.map(([city, text]) => <article key={city}><h3>{city}</h3><p>{text}</p></article>)}</div>
-      </section>
+      <InteractiveNigeriaMap />
 
       <section className="regionalCoverage">
         <div className="sectionHeading twoColumnHeading"><div><p className="eyebrow">West Africa</p><h2>Regional coordination for selected assignments.</h2></div><p>Cross-border capability is developed assignment by assignment and may involve vetted local providers, specialist advisers and legally authorised partners.</p></div>
