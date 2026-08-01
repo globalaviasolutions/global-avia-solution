@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 
 const resources = [
   ["Travel Security", "Nigeria travel security planning", "A practical framework for preparing travellers, routes, communications and contingencies before arrival.", "/resources/travel-security-nigeria"],
-  ["Airport Operations", "Airport arrival briefing", "Information to prepare for meet-and-assist, secure transfers, crew movements and hotel coordination.", "/airport-crew-security"],
-  ["Executive Protection", "Protective support checklist", "Key details required to assess an executive visit, itinerary, profile, exposure and mobility needs.", "/executive-protection"],
-  ["Journey Management", "Movement planning framework", "How route assessment, check-ins, escalation protocols and contingency options support safer movement.", "/journey-management"],
+  ["Executive Protection", "Executive protection checklist", "The information required to assess protective coverage, secure mobility, privacy and operational complexity.", "/resources/executive-protection-checklist"],
+  ["Airport Operations", "Airport arrival security guide", "A structured approach to meet-and-assist coordination, traveller verification and secure onward transfers.", "/resources/airport-arrival-guide"],
+  ["Journey Management", "Journey planning guide", "How route assessment, check-ins, escalation triggers and alternatives support controlled road movements.", "/resources/journey-planning-guide"],
   ["Corporate Security", "Project security planning", "Questions to address when preparing offices, sites, events, visiting teams and project movements.", "/corporate-security"],
   ["Crisis Preparation", "Urgent response information", "The minimum information needed when requesting urgent operational review or incident coordination.", "/emergency-response"],
 ];
