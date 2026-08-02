@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720" role="img" aria-label="Stylised topographic map of West and Central Africa">
+  <defs>
+    <linearGradient id="land" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#273126"/>
+      <stop offset="0.45" stop-color="#1d281f"/>
+      <stop offset="1" stop-color="#121a17"/>
+    </linearGradient>
+    <radialGradient id="terrain" cx="45%" cy="42%" r="70%">
+      <stop offset="0" stop-color="#506048" stop-opacity=".55"/>
+      <stop offset=".5" stop-color="#29372b" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#0b1110" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+      <feComponentTransfer in="g" result="a"><feFuncA type="table" tableValues="0 .13"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="a" mode="soft-light"/>
+    </filter>
+    <clipPath id="africaClip">
+      <path d="M420 24L525 70l72 116 126 164-19 119-82 105-17 125-267 5-76-95-54-155 34-168 87-105 91-157Z"/>
+    </clipPath>
+  </defs>
+  <rect width="900" height="720" fill="#080c0c"/>
+  <g filter="url(#noise)">
+    <path d="M420 24L525 70l72 116 126 164-19 119-82 105-17 125-267 5-76-95-54-155 34-168 87-105 91-157Z" fill="url(#land)" stroke="#60705e" stroke-width="2"/>
+    <path d="M420 24L525 70l72 116 126 164-19 119-82 105-17 125-267 5-76-95-54-155 34-168 87-105 91-157Z" fill="url(#terrain)"/>
+  </g>
+  <g clip-path="url(#africaClip)" fill="none" stroke="#8fa083" stroke-opacity=".22" stroke-width="1.2">
+    <path d="M180 215C295 185 430 220 560 190s235-12 320 36"/>
+    <path d="M165 250c130-35 260 15 398-24 118-33 222-15 313 12"/>
+    <path d="M155 293c150-42 265 21 405-16 135-36 238-17 322 20"/>
+    <path d="M145 340c148-32 273 18 407-20 125-35 232-5 320 26"/>
+    <path d="M145 390c128-28 250 18 387-15 140-34 244-2 345 34"/>
+    <path d="M158 445c128-22 246 18 370-8 142-30 251 8 340 44"/>
+    <path d="M183 505c113-10 224 24 343 4 132-23 230 10 313 45"/>
+    <path d="M225 570c103 2 194 27 295 15 116-14 209 14 286 48"/>
+  </g>
+  <g clip-path="url(#africaClip)" fill="none" stroke="#c2a05a" stroke-opacity=".18" stroke-width="1">
+    <path d="M275 290l70 65 52 52 19 91"/>
+    <path d="M345 355l72-24 51 42 64-8 62 52"/>
+    <path d="M397 407l-46 69 32 98"/>
+    <path d="M468 373l8 84 72 48"/>
+    <path d="M532 365l-15 96 75 74"/>
+    <path d="M594 417l56 44-28 113"/>
+  </g>
+  <g clip-path="url(#africaClip)" fill="none" stroke="#d7d1bd" stroke-opacity=".22" stroke-width="1.4">
+    <path d="M256 410l96-50 66 47 54-34 62 41 64-4"/>
+    <path d="M352 360l-10 92 49 56 79-11 54 46"/>
+    <path d="M418 407l38 51 18 93"/>
+    <path d="M534 414l-18 76 76 48"/>
+  </g>
+  <path d="M257 492c70 48 139 42 206 22 70-21 122-16 171 13" fill="none" stroke="#75a58f" stroke-opacity=".25" stroke-width="5"/>
+</svg>
