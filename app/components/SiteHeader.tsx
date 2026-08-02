@@ -22,6 +22,7 @@ const industries = [
 ];
 
 const company = [
+  ["Operations Centre", "/operations-center"],
   ["About Us", "/about"],
   ["Leadership", "/leadership"],
   ["Standards & Compliance", "/standards"],
@@ -54,47 +55,28 @@ export default function SiteHeader() {
 
   const menu = (label: string, items: string[][], overview: string) => (
     <div className={`megaGroup ${openMenu === label ? "isOpen" : ""}`}>
-      <button
-        type="button"
-        className="megaTrigger"
-        aria-expanded={openMenu === label}
-        onClick={() => setOpenMenu(openMenu === label ? null : label)}
-      >
+      <button type="button" className="megaTrigger" aria-expanded={openMenu === label} onClick={() => setOpenMenu(openMenu === label ? null : label)}>
         {label}<span aria-hidden="true">⌄</span>
       </button>
       <div className="megaPanel">
-        <div className="megaIntro">
-          <span>{label}</span>
-          <h2>Professional support built around the mission.</h2>
-          <a href={overview}>View all {label.toLowerCase()} →</a>
-        </div>
-        <div className="megaLinks">
-          {items.map(([title, href]) => <a className={isActive(pathname, href) ? "active" : ""} href={href} key={href}>{title}<span>→</span></a>)}
-        </div>
+        <div className="megaIntro"><span>{label}</span><h2>Professional support built around the mission.</h2><a href={overview}>View all {label.toLowerCase()} →</a></div>
+        <div className="megaLinks">{items.map(([title, href]) => <a className={isActive(pathname, href) ? "active" : ""} href={href} key={href}>{title}<span>→</span></a>)}</div>
       </div>
     </div>
   );
 
-  return (
-    <header className={`globalSiteHeader ${scrolled ? "isScrolled" : ""}`}>
-      <a className="globalBrand" href="/" aria-label="Africa Security Solutions home">
-        <img src="/logo.svg" alt="Africa Security Solutions" />
-      </a>
-
-      <button className={`globalMenuButton ${mobileOpen ? "isOpen" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}>
-        <span /><span /><span />
-      </button>
-
-      <nav className={`globalNav ${mobileOpen ? "isOpen" : ""}`} aria-label="Primary navigation">
-        {menu("Services", services, "/services")}
-        {menu("Industries", industries, "/industries")}
-        <a className={isActive(pathname, "/coverage") ? "active" : ""} href="/coverage">Coverage</a>
-        <a className={isActive(pathname, "/locations") ? "active" : ""} href="/locations">Locations</a>
-        {menu("Company", company, "/about")}
-        <a className={isActive(pathname, "/contact") ? "active" : ""} href="/contact">Contact</a>
-        <a className="emergencyNav" href="/emergency-response">Emergency</a>
-        <a className="consultationNav" href="/contact">Request Consultation</a>
-      </nav>
-    </header>
-  );
+  return <header className={`globalSiteHeader ${scrolled ? "isScrolled" : ""}`}>
+    <a className="globalBrand" href="/" aria-label="Africa Security Solutions home"><img src="/logo.svg" alt="Africa Security Solutions" /></a>
+    <button className={`globalMenuButton ${mobileOpen ? "isOpen" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}><span /><span /><span /></button>
+    <nav className={`globalNav ${mobileOpen ? "isOpen" : ""}`} aria-label="Primary navigation">
+      {menu("Services", services, "/services")}
+      {menu("Industries", industries, "/industries")}
+      <a className={isActive(pathname, "/coverage") ? "active" : ""} href="/coverage">Coverage</a>
+      <a className={isActive(pathname, "/locations") ? "active" : ""} href="/locations">Locations</a>
+      {menu("Company", company, "/about")}
+      <a className={isActive(pathname, "/contact") ? "active" : ""} href="/contact">Contact</a>
+      <a className="emergencyNav" href="/emergency-response">Emergency</a>
+      <a className="consultationNav" href="/contact">Request Consultation</a>
+    </nav>
+  </header>;
 }
