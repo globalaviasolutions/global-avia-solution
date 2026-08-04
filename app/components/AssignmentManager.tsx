@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import DocumentsCenter from "./DocumentsCenter";
+import OperationsTimeline from "./OperationsTimeline";
 
 type Assignment={
   reference:string;operation_name?:string;team_leader?:string;team_members?:string;vehicles?:string;
@@ -61,5 +62,6 @@ export default function AssignmentManager({reference,accessKey,status}:{referenc
       </form>
     </section>
     <DocumentsCenter reference={reference} accessKey={accessKey}/>
+    <OperationsTimeline reference={reference} accessKey={accessKey}/>
   </>;
 }
