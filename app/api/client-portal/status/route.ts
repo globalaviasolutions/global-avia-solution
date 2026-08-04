@@ -11,6 +11,8 @@ export async function POST(request:Request){
     const response=await fetch(query,{headers:{apikey:key,Authorization:`Bearer ${key}`},cache:"no-store"});
     if(!response.ok){console.error("Portal database error",await response.text());return NextResponse.json({message:"The request could not be retrieved."},{status:502});}
     const rows=await response.json(); if(!rows.length) return NextResponse.json({message:"No matching request was found. Check the reference and email address."},{status:404});
-    const row=rows[0]; return NextResponse.json({request:{reference:row.reference,status:row.status,service:row.service,urgency:row.urgency,country:row.country,location:row.location,requiredDate:row.required_date,people:row.people,createdAt:row.created_at,updatedAt:row.updated_at,nextStep:row.next_step,notes:row.client_notes}});
+    const historyResponse=await fetch(`${url}/rest/v1/request_history?reference=eq.${encodeURIComponent(reference)}&client_visible=eq.true&select=status,next_step,client_note,event_type,created_at&order=created_at.desc&limit=50`,{headers:{apikey:key,Authorization:`Bearer ${key}`},cache:"no-store"});
+    const history=historyResponse.ok?await historyResponse.json():[];
+    const row=rows[0]; return NextResponse.json({request:{reference:row.reference,status:row.status,service:row.service,urgency:row.urgency,country:row.country,location:row.location,requiredDate:row.required_date,people:row.people,createdAt:row.created_at,updatedAt:row.updated_at,nextStep:row.next_step,notes:row.client_notes,history}});
   }catch(error){console.error("Portal lookup error",error);return NextResponse.json({message:"The request could not be processed."},{status:500});}
 }
