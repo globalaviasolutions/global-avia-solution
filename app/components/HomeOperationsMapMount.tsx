@@ -4,6 +4,11 @@ import { useEffect } from "react";
 import { createRoot, Root } from "react-dom/client";
 import HomeOperationsMap from "./HomeOperationsMap";
 
+type IdleWindow = Window & {
+  requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+  cancelIdleCallback?: (id: number) => void;
+};
+
 export default function HomeOperationsMapMount() {
   useEffect(() => {
     if (window.location.pathname !== "/") return;
@@ -23,6 +28,7 @@ export default function HomeOperationsMapMount() {
     let root: Root | null = null;
     let observer: IntersectionObserver | null = null;
     let idleId: number | null = null;
+    const idleWindow = window as IdleWindow;
 
     const renderMap = () => {
       if (root) return;
@@ -40,15 +46,12 @@ export default function HomeOperationsMapMount() {
         if (entries.some((entry) => entry.isIntersecting)) renderMap();
       }, { rootMargin: "500px 0px", threshold: 0.01 });
       observer.observe(mount);
-
-      if ("requestIdleCallback" in window) {
-        idleId = window.requestIdleCallback(renderMap, { timeout: 4500 });
-      }
+      idleId = idleWindow.requestIdleCallback?.(renderMap, { timeout: 4500 }) ?? null;
     }
 
     return () => {
       observer?.disconnect();
-      if (idleId !== null && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      if (idleId !== null) idleWindow.cancelIdleCallback?.(idleId);
       root?.unmount();
       mount.remove();
       existing.hidden = false;
