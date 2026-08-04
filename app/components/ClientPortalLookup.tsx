@@ -8,8 +8,16 @@ type RequestRecord = {
   requiredDate?:string;people?:string;createdAt:string;updatedAt:string;nextStep:string;notes?:string;history?:HistoryEvent[];
 };
 type PortalTab="overview"|"messages"|"documents"|"invoices";
-const stages=["Received","Under Review","Proposal Sent","Confirmed","Completed"];
-const stageCopy:Record<string,string>={"Received":"Your request has been recorded for initial review.","Under Review":"The operations team is assessing scope, timing and feasibility.","Proposal Sent":"A proposed scope or clarification has been issued for review.","Confirmed":"The agreed assignment has been confirmed in writing.","Completed":"The request is marked complete. Further work requires a new brief."};
+const stages=["Received","Under Review","Proposal Sent","Confirmed","Team Assigned","Operation Active","Completed"];
+const stageCopy:Record<string,string>={
+  "Received":"Your request has been recorded for initial review.",
+  "Under Review":"The operations team is assessing scope, timing and feasibility.",
+  "Proposal Sent":"A proposed scope or clarification has been issued for review.",
+  "Confirmed":"The agreed assignment has been confirmed in writing.",
+  "Team Assigned":"An operational team has been assigned and mobilisation is being coordinated.",
+  "Operation Active":"The confirmed assignment is currently active.",
+  "Completed":"The request is marked complete. Further work requires a new brief."
+};
 
 export default function ClientPortalLookup(){
   const [record,setRecord]=useState<RequestRecord|null>(null),[message,setMessage]=useState(""),[loading,setLoading]=useState(false),[tab,setTab]=useState<PortalTab>("overview"),[reference,setReference]=useState(""),[email,setEmail]=useState("");
