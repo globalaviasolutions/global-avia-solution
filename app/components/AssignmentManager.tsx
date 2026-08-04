@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import DocumentsCenter from "./DocumentsCenter";
 import OperationsTimeline from "./OperationsTimeline";
+import TeamManagement from "./TeamManagement";
 
 type Assignment={
   reference:string;operation_name?:string;team_leader?:string;team_members?:string;vehicles?:string;
@@ -50,7 +51,7 @@ export default function AssignmentManager({reference,accessKey,status}:{referenc
           <label><span>Start date and time</span><input name="startAt" type="datetime-local" defaultValue={assignment?.start_at?.slice(0,16)||""}/></label>
           <label><span>End date and time</span><input name="endAt" type="datetime-local" defaultValue={assignment?.end_at?.slice(0,16)||""}/></label>
         </div>
-        <label><span>Assigned team</span><textarea name="teamMembers" rows={4} defaultValue={assignment?.team_members||""} placeholder="One person per line: role — name — contact"/></label>
+        <label><span>Assigned team summary</span><textarea name="teamMembers" rows={4} defaultValue={assignment?.team_members||""} placeholder="Optional manual summary. Use Team Management below for structured assignments."/></label>
         <label><span>Vehicles / transport</span><textarea name="vehicles" rows={3} defaultValue={assignment?.vehicles||""} placeholder="Vehicle, driver, registration or supplier reference"/></label>
         <div className="assignmentGrid">
           <label><span>Meeting point</span><textarea name="meetingPoint" rows={3} defaultValue={assignment?.meeting_point||""}/></label>
@@ -61,6 +62,7 @@ export default function AssignmentManager({reference,accessKey,status}:{referenc
         {message&&<p className={message.includes("successfully")?"formMessage success":"formMessage error"}>{message}</p>}
       </form>
     </section>
+    <TeamManagement reference={reference} accessKey={accessKey}/>
     <DocumentsCenter reference={reference} accessKey={accessKey}/>
     <OperationsTimeline reference={reference} accessKey={accessKey}/>
   </>;
