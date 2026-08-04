@@ -4,13 +4,15 @@ import { FormEvent, useEffect, useState } from "react";
 import DocumentsCenter from "./DocumentsCenter";
 import OperationsTimeline from "./OperationsTimeline";
 import TeamManagement from "./TeamManagement";
+import ContractorDispatch from "./ContractorDispatch";
 
 type Assignment={
   reference:string;operation_name?:string;team_leader?:string;team_members?:string;vehicles?:string;
   start_at?:string;end_at?:string;meeting_point?:string;emergency_contact?:string;internal_notes?:string;
 };
 
-export default function AssignmentManager({reference,accessKey,status}:{reference:string;accessKey:string;status:string}){
+type Props={reference:string;accessKey:string;status:string;service:string;country:string;location:string;requiredDate?:string;people?:string;urgency:string};
+export default function AssignmentManager({reference,accessKey,status,service,country,location,requiredDate,people,urgency}:Props){
   const [assignment,setAssignment]=useState<Assignment|null>(null);
   const [loading,setLoading]=useState(true);
   const [saving,setSaving]=useState(false);
@@ -63,6 +65,7 @@ export default function AssignmentManager({reference,accessKey,status}:{referenc
       </form>
     </section>
     <TeamManagement reference={reference} accessKey={accessKey}/>
+    <ContractorDispatch reference={reference} accessKey={accessKey} service={service} country={country} location={location} requiredDate={requiredDate} people={people} urgency={urgency}/>
     <DocumentsCenter reference={reference} accessKey={accessKey}/>
     <OperationsTimeline reference={reference} accessKey={accessKey}/>
   </>;
