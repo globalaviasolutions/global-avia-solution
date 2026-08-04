@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import DocumentsCenter from "./DocumentsCenter";
 
 type Assignment={
   reference:string;operation_name?:string;team_leader?:string;team_members?:string;vehicles?:string;
@@ -37,25 +38,28 @@ export default function AssignmentManager({reference,accessKey,status}:{referenc
 
   if(loading)return <section className="assignmentManager assignmentLoading">Loading assignment manager…</section>;
   const enabled=["Confirmed","Team Assigned","Operation Active","Completed"].includes(status);
-  return <section className="assignmentManager">
-    <div className="assignmentHeading"><div><p className="eyebrow">Internal assignment</p><h3>Assignment Manager</h3></div><span>{enabled?"Operational planning enabled":"Available after confirmation"}</span></div>
-    {!enabled&&<p className="assignmentNotice">You can prepare the assignment now, but operational mobilisation should only begin after written confirmation.</p>}
-    <form onSubmit={save} key={`${reference}-${assignment?.reference||"new"}`}>
-      <div className="assignmentGrid">
-        <label><span>Operation name</span><input name="operationName" defaultValue={assignment?.operation_name||""} placeholder="e.g. Tallinn Executive Visit"/></label>
-        <label><span>Team leader</span><input name="teamLeader" defaultValue={assignment?.team_leader||""} placeholder="Name and contact"/></label>
-        <label><span>Start date and time</span><input name="startAt" type="datetime-local" defaultValue={assignment?.start_at?.slice(0,16)||""}/></label>
-        <label><span>End date and time</span><input name="endAt" type="datetime-local" defaultValue={assignment?.end_at?.slice(0,16)||""}/></label>
-      </div>
-      <label><span>Assigned team</span><textarea name="teamMembers" rows={4} defaultValue={assignment?.team_members||""} placeholder="One person per line: role — name — contact"/></label>
-      <label><span>Vehicles / transport</span><textarea name="vehicles" rows={3} defaultValue={assignment?.vehicles||""} placeholder="Vehicle, driver, registration or supplier reference"/></label>
-      <div className="assignmentGrid">
-        <label><span>Meeting point</span><textarea name="meetingPoint" rows={3} defaultValue={assignment?.meeting_point||""}/></label>
-        <label><span>Emergency contact</span><textarea name="emergencyContact" rows={3} defaultValue={assignment?.emergency_contact||""}/></label>
-      </div>
-      <label><span>Internal notes — never shown to client</span><textarea name="internalNotes" rows={5} defaultValue={assignment?.internal_notes||""} placeholder="Internal coordination notes, supplier confirmations and operational reminders."/></label>
-      <div className="assignmentActions"><button className="button primary" disabled={saving}>{saving?"Saving…":"Save assignment"}</button><small>Assignment data is internal and separate from client-visible notes.</small></div>
-      {message&&<p className={message.includes("successfully")?"formMessage success":"formMessage error"}>{message}</p>}
-    </form>
-  </section>;
+  return <>
+    <section className="assignmentManager">
+      <div className="assignmentHeading"><div><p className="eyebrow">Internal assignment</p><h3>Assignment Manager</h3></div><span>{enabled?"Operational planning enabled":"Available after confirmation"}</span></div>
+      {!enabled&&<p className="assignmentNotice">You can prepare the assignment now, but operational mobilisation should only begin after written confirmation.</p>}
+      <form onSubmit={save} key={`${reference}-${assignment?.reference||"new"}`}>
+        <div className="assignmentGrid">
+          <label><span>Operation name</span><input name="operationName" defaultValue={assignment?.operation_name||""} placeholder="e.g. Tallinn Executive Visit"/></label>
+          <label><span>Team leader</span><input name="teamLeader" defaultValue={assignment?.team_leader||""} placeholder="Name and contact"/></label>
+          <label><span>Start date and time</span><input name="startAt" type="datetime-local" defaultValue={assignment?.start_at?.slice(0,16)||""}/></label>
+          <label><span>End date and time</span><input name="endAt" type="datetime-local" defaultValue={assignment?.end_at?.slice(0,16)||""}/></label>
+        </div>
+        <label><span>Assigned team</span><textarea name="teamMembers" rows={4} defaultValue={assignment?.team_members||""} placeholder="One person per line: role — name — contact"/></label>
+        <label><span>Vehicles / transport</span><textarea name="vehicles" rows={3} defaultValue={assignment?.vehicles||""} placeholder="Vehicle, driver, registration or supplier reference"/></label>
+        <div className="assignmentGrid">
+          <label><span>Meeting point</span><textarea name="meetingPoint" rows={3} defaultValue={assignment?.meeting_point||""}/></label>
+          <label><span>Emergency contact</span><textarea name="emergencyContact" rows={3} defaultValue={assignment?.emergency_contact||""}/></label>
+        </div>
+        <label><span>Internal notes — never shown to client</span><textarea name="internalNotes" rows={5} defaultValue={assignment?.internal_notes||""} placeholder="Internal coordination notes, supplier confirmations and operational reminders."/></label>
+        <div className="assignmentActions"><button className="button primary" disabled={saving}>{saving?"Saving…":"Save assignment"}</button><small>Assignment data is internal and separate from client-visible notes.</small></div>
+        {message&&<p className={message.includes("successfully")?"formMessage success":"formMessage error"}>{message}</p>}
+      </form>
+    </section>
+    <DocumentsCenter reference={reference} accessKey={accessKey}/>
+  </>;
 }
