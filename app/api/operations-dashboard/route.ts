@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const allowedStatuses = ["Received", "Under Review", "Proposal Sent", "Confirmed", "Completed"];
+const allowedStatuses = ["Received", "Under Review", "Proposal Sent", "Confirmed", "Team Assigned", "Operation Active", "Completed"];
 
 function authorised(request: Request) {
   const expected = process.env.OPERATIONS_DASHBOARD_KEY;
@@ -13,7 +13,7 @@ function supabaseConfig() {
   return url && key ? { url, key } : null;
 }
 function clean(value: unknown, max = 3000) { return String(value ?? "").trim().slice(0, max); }
-function escapeHtml(value: string) { return value.replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c] || c)); }
+function escapeHtml(value: string) { return value.replace(/[&<>'\"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'\"':"&quot;"}[c] || c)); }
 
 async function sendStatusEmail(record: Record<string, unknown>) {
   const apiKey = process.env.RESEND_API_KEY;
@@ -62,7 +62,11 @@ export async function PATCH(request:Request){
     const historyResponse=await fetch(`${config.url}/rest/v1/request_history`,{method:"POST",headers:{apikey:config.key,Authorization:`Bearer ${config.key}`,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({reference,status,next_step:nextStep,client_note:clientNotes,event_type:eventType,client_visible:true})});
     if(!historyResponse.ok) console.error("Request history error:",await historyResponse.text());
   }
-  let notification={sent:false,warning:""}; if(body.notifyClient&&changed&&updated) notification=await sendStatusEmail(updated);
+  let notification={sent:false,warning:""};
+  if(body.notifyClient&&changed&&updated){
+    const result=await sendStatusEmail(updated);
+    notification={sent:result.sent,warning:result.warning??""};
+  }
   const history=await loadHistory(config);
   return NextResponse.json({request:{...updated,history:history.filter((event:Record<string,unknown>)=>event.reference===reference)},notificationSent:notification.sent,warning:notification.warning});
 }
