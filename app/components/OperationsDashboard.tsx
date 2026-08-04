@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import AssignmentManager from "./AssignmentManager";
 
 type RequestRecord = {
   reference: string; email: string; name: string; company?: string; phone?: string; request_type: string;
@@ -108,17 +109,20 @@ export default function OperationsDashboard() {
       </aside>
 
       <main className="opsAdminDetail">
-        {!selected ? <div className="opsAdminPlaceholder"><p className="eyebrow">Request detail</p><h2>Select a request</h2><p>Choose an item from the list to review its details and update the client-visible status.</p></div> : <form onSubmit={saveRequest}>
-          <div className="opsAdminTitle"><div><span>Reference</span><h2>{selected.reference}</h2></div><b>{selected.urgency}</b></div>
-          <div className="opsAdminMeta"><article><span>Client</span><strong>{selected.name}</strong><small>{selected.company || "No company provided"}</small></article><article><span>Contact</span><strong>{selected.email}</strong><small>{selected.phone || "No phone provided"}</small></article><article><span>Service</span><strong>{selected.service}</strong><small>{selected.request_type}</small></article><article><span>Location</span><strong>{selected.location}, {selected.country}</strong><small>{selected.required_date || "Date not specified"}</small></article></div>
-          <div className="opsAdminDetails"><span>Assignment details</span><p>{selected.details}</p></div>
-          <label><span>Client-visible status</span><select name="status" defaultValue={selected.status} key={`${selected.reference}-status`} onChange={event=>setNextStep(defaultNextSteps[event.target.value] || nextStep)}>{statuses.map(status => <option key={status}>{status}</option>)}</select></label>
-          <label><span>Next step shown in Client Portal</span><textarea name="nextStep" rows={4} value={nextStep} onChange={event=>setNextStep(event.target.value)} /></label>
-          <label><span>Client-visible notes</span><textarea name="clientNotes" rows={5} defaultValue={selected.client_notes || ""} key={`${selected.reference}-notes`} placeholder="Optional update visible in the client portal." /></label>
-          <label className="opsNotifyClient"><input type="checkbox" name="notifyClient" value="yes" defaultChecked /><span><strong>Email this update to the client</strong><small>The email includes the status, next step, client-visible note and a secure Client Portal link.</small></span></label>
-          <div className="opsAdminActions"><button className="button primary" disabled={saving}>{saving ? "Saving…" : "Save status update"}</button><a className="button secondary" href={`mailto:${selected.email}?subject=${encodeURIComponent(selected.reference + " — Africa Security Solutions")}`}>Email client manually</a></div>
-          {message && <p className={`formMessage ${messageType}`}>{message}</p>}
-        </form>}
+        {!selected ? <div className="opsAdminPlaceholder"><p className="eyebrow">Request detail</p><h2>Select a request</h2><p>Choose an item from the list to review its details and update the client-visible status.</p></div> : <>
+          <form onSubmit={saveRequest}>
+            <div className="opsAdminTitle"><div><span>Reference</span><h2>{selected.reference}</h2></div><b>{selected.urgency}</b></div>
+            <div className="opsAdminMeta"><article><span>Client</span><strong>{selected.name}</strong><small>{selected.company || "No company provided"}</small></article><article><span>Contact</span><strong>{selected.email}</strong><small>{selected.phone || "No phone provided"}</small></article><article><span>Service</span><strong>{selected.service}</strong><small>{selected.request_type}</small></article><article><span>Location</span><strong>{selected.location}, {selected.country}</strong><small>{selected.required_date || "Date not specified"}</small></article></div>
+            <div className="opsAdminDetails"><span>Assignment details</span><p>{selected.details}</p></div>
+            <label><span>Client-visible status</span><select name="status" defaultValue={selected.status} key={`${selected.reference}-status`} onChange={event=>setNextStep(defaultNextSteps[event.target.value] || nextStep)}>{statuses.map(status => <option key={status}>{status}</option>)}</select></label>
+            <label><span>Next step shown in Client Portal</span><textarea name="nextStep" rows={4} value={nextStep} onChange={event=>setNextStep(event.target.value)} /></label>
+            <label><span>Client-visible notes</span><textarea name="clientNotes" rows={5} defaultValue={selected.client_notes || ""} key={`${selected.reference}-notes`} placeholder="Optional update visible in the client portal." /></label>
+            <label className="opsNotifyClient"><input type="checkbox" name="notifyClient" value="yes" defaultChecked /><span><strong>Email this update to the client</strong><small>The email includes the status, next step, client-visible note and a secure Client Portal link.</small></span></label>
+            <div className="opsAdminActions"><button className="button primary" disabled={saving}>{saving ? "Saving…" : "Save status update"}</button><a className="button secondary" href={`mailto:${selected.email}?subject=${encodeURIComponent(selected.reference + " — Africa Security Solutions")}`}>Email client manually</a></div>
+            {message && <p className={`formMessage ${messageType}`}>{message}</p>}
+          </form>
+          <AssignmentManager reference={selected.reference} accessKey={key} status={selected.status}/>
+        </>}
       </main>
     </div>
   </section>;
