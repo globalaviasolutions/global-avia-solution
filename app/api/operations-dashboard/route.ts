@@ -14,6 +14,65 @@ function supabaseConfig() {
   return url && key ? { url, key } : null;
 }
 
+function clean(value: unknown, max = 3000) {
+  return String(value ?? "").trim().slice(0, max);
+}
+
+function escapeHtml(value: string) {
+  return value.replace(/[&<>'"]/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;",
+  }[character] || character));
+}
+
+async function sendStatusEmail(record: Record<string, unknown>) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return { sent: false, warning: "Email notification was not sent because RESEND_API_KEY is not configured." };
+
+  const reference = clean(record.reference, 60);
+  const email = clean(record.email, 180);
+  const name = clean(record.name, 120) || "Client";
+  const status = clean(record.status, 80);
+  const nextStep = clean(record.next_step, 1000);
+  const clientNotes = clean(record.client_notes, 3000);
+  const from = process.env.RESEND_FROM_EMAIL || "Africa Security Solutions <onboarding@resend.dev>";
+  const portalUrl = `https://security-solutions.africa/client-portal?reference=${encodeURIComponent(reference)}&email=${encodeURIComponent(email)}`;
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;max-width:680px;margin:auto;color:#171717">
+      <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9a742f">Africa Security Solutions</p>
+      <h1 style="font-size:30px;margin:12px 0">Your request status has been updated</h1>
+      <p>Hello ${escapeHtml(name)},</p>
+      <p>An update has been posted for request <strong>${escapeHtml(reference)}</strong>.</p>
+      <div style="margin:28px 0;padding:22px;border-left:4px solid #c9a052;background:#f7f4ed">
+        <p style="margin:0 0 8px;color:#666">Current status</p>
+        <h2 style="margin:0 0 18px">${escapeHtml(status)}</h2>
+        <p style="margin:0 0 8px;color:#666">Next step</p>
+        <p style="margin:0">${escapeHtml(nextStep || "Our operations team will contact you with the next step.")}</p>
+        ${clientNotes ? `<p style="margin:18px 0 8px;color:#666">Operations note</p><p style="margin:0">${escapeHtml(clientNotes).replace(/\n/g, "<br>")}</p>` : ""}
+      </div>
+      <p><a href="${portalUrl}" style="display:inline-block;padding:13px 20px;background:#171717;color:#fff;text-decoration:none">View Client Portal</a></p>
+      <p style="margin-top:28px;color:#666;font-size:13px">This update does not replace any written service confirmation, proposal or operational instruction issued separately by our team.</p>
+    </div>`;
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from,
+      to: [email],
+      reply_to: "info@security-solutions.africa",
+      subject: `${reference} — Status updated to ${status}`,
+      html,
+    }),
+  });
+
+  if (!response.ok) {
+    console.error("Status notification email error:", await response.text());
+    return { sent: false, warning: "The request was updated, but the client email could not be delivered." };
+  }
+  return { sent: true };
+}
+
 export async function GET(request: Request) {
   if (!authorised(request)) return NextResponse.json({ message: "Unauthorised." }, { status: 401 });
   const config = supabaseConfig();
@@ -32,12 +91,21 @@ export async function PATCH(request: Request) {
   const config = supabaseConfig();
   if (!config) return NextResponse.json({ message: "Database connection is not configured." }, { status: 503 });
 
-  const body = await request.json() as { reference?: string; status?: string; nextStep?: string; clientNotes?: string };
-  const reference = String(body.reference || "").trim();
-  const status = String(body.status || "").trim();
-  const nextStep = String(body.nextStep || "").trim().slice(0, 1000);
-  const clientNotes = String(body.clientNotes || "").trim().slice(0, 3000);
+  const body = await request.json() as { reference?: string; status?: string; nextStep?: string; clientNotes?: string; notifyClient?: boolean };
+  const reference = clean(body.reference, 60);
+  const status = clean(body.status, 80);
+  const nextStep = clean(body.nextStep, 1000);
+  const clientNotes = clean(body.clientNotes, 3000);
   if (!reference || !allowedStatuses.includes(status)) return NextResponse.json({ message: "Invalid update." }, { status: 400 });
+
+  const currentResponse = await fetch(`${config.url}/rest/v1/client_requests?reference=eq.${encodeURIComponent(reference)}&select=*&limit=1`, {
+    headers: { apikey: config.key, Authorization: `Bearer ${config.key}` },
+    cache: "no-store",
+  });
+  if (!currentResponse.ok) return NextResponse.json({ message: "Unable to verify the current request." }, { status: 502 });
+  const currentRecords = await currentResponse.json();
+  const current = currentRecords[0];
+  if (!current) return NextResponse.json({ message: "Request not found." }, { status: 404 });
 
   const response = await fetch(`${config.url}/rest/v1/client_requests?reference=eq.${encodeURIComponent(reference)}`, {
     method: "PATCH",
@@ -51,5 +119,15 @@ export async function PATCH(request: Request) {
   });
   if (!response.ok) return NextResponse.json({ message: "Unable to update the request." }, { status: 502 });
   const records = await response.json();
-  return NextResponse.json({ request: records[0] || null });
+  const updated = records[0] || null;
+
+  const changed = current.status !== status || current.next_step !== nextStep || (current.client_notes || "") !== clientNotes;
+  let notification = { sent: false, warning: "" };
+  if (body.notifyClient && changed && updated) notification = await sendStatusEmail(updated) as { sent: boolean; warning?: string };
+
+  return NextResponse.json({
+    request: updated,
+    notificationSent: notification.sent,
+    warning: notification.warning || "",
+  });
 }
