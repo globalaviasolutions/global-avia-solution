@@ -6,17 +6,18 @@ function config(){const url=process.env.SUPABASE_URL,key=process.env.SUPABASE_SE
 function clean(value:unknown,max=3000){return String(value??"").trim().slice(0,max)}
 function headers(key:string){return {apikey:key,Authorization:`Bearer ${key}`,"Content-Type":"application/json"}}
 function hashToken(token:string){return createHash("sha256").update(token).digest("hex")}
+function uniqueByEmail(items:Record<string,unknown>[]){const seen=new Set<string>();return items.filter(item=>{const email=clean(item.email,180).toLowerCase();if(!email||seen.has(email))return false;seen.add(email);return true})}
 
 export async function GET(request:Request){
   if(!authorised(request))return NextResponse.json({message:"Unauthorised."},{status:401});
   const c=config();if(!c)return NextResponse.json({message:"Database connection is not configured."},{status:503});
   const reference=clean(new URL(request.url).searchParams.get("reference"),60);
   const [contractorsResponse,dispatchesResponse]=await Promise.all([
-    fetch(`${c.url}/rest/v1/contractors?select=*&order=company_name.asc`,{headers:headers(c.key),cache:"no-store"}),
+    fetch(`${c.url}/rest/v1/contractors?select=*&order=company_name.asc,created_at.asc`,{headers:headers(c.key),cache:"no-store"}),
     reference?fetch(`${c.url}/rest/v1/contractor_dispatches?reference=eq.${encodeURIComponent(reference)}&select=*,contractors(company_name,contact_name,email)&order=created_at.desc`,{headers:headers(c.key),cache:"no-store"}):null,
   ]);
   if(!contractorsResponse.ok)return NextResponse.json({message:"Unable to load contractors."},{status:502});
-  const contractors=await contractorsResponse.json();
+  const contractors=uniqueByEmail(await contractorsResponse.json());
   const dispatches=dispatchesResponse&&dispatchesResponse.ok?await dispatchesResponse.json():[];
   return NextResponse.json({contractors,dispatches});
 }
@@ -29,9 +30,18 @@ export async function POST(request:Request){
   if(action==="addContractor"){
     const companyName=clean(body.companyName,180),contactName=clean(body.contactName,160),email=clean(body.email,180).toLowerCase();
     if(!companyName||!email)return NextResponse.json({message:"Company name and email are required."},{status:400});
+    const existingResponse=await fetch(`${c.url}/rest/v1/contractors?email=ilike.${encodeURIComponent(email)}&select=*&order=created_at.asc&limit=1`,{headers:headers(c.key),cache:"no-store"});
+    if(!existingResponse.ok)return NextResponse.json({message:"Unable to check the contractor database."},{status:502});
+    const existing=(await existingResponse.json())[0];
+    if(existing)return NextResponse.json({contractor:existing,alreadyExists:true,message:"Contractor already exists and has been selected."});
     const response=await fetch(`${c.url}/rest/v1/contractors`,{method:"POST",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({company_name:companyName,contact_name:contactName,email,phone:clean(body.phone,80),countries:clean(body.countries,500),services:clean(body.services,1000),rating:Number(body.rating)||null,notes:clean(body.notes,2000),status:"Active"})});
-    if(!response.ok)return NextResponse.json({message:"Unable to add contractor."},{status:502});
-    return NextResponse.json({contractor:(await response.json())[0]});
+    if(!response.ok){
+      const retry=await fetch(`${c.url}/rest/v1/contractors?email=ilike.${encodeURIComponent(email)}&select=*&order=created_at.asc&limit=1`,{headers:headers(c.key),cache:"no-store"});
+      const found=retry.ok?(await retry.json())[0]:null;
+      if(found)return NextResponse.json({contractor:found,alreadyExists:true,message:"Contractor already exists and has been selected."});
+      return NextResponse.json({message:"Unable to add contractor."},{status:502});
+    }
+    return NextResponse.json({contractor:(await response.json())[0],alreadyExists:false,message:"Contractor added successfully."});
   }
   if(action!=="dispatch")return NextResponse.json({message:"Invalid action."},{status:400});
   const reference=clean(body.reference,60),contractorId=clean(body.contractorId,60),brief=clean(body.brief,5000),responseDeadline=clean(body.responseDeadline,60);
