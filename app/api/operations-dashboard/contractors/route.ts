@@ -7,63 +7,87 @@ function clean(value:unknown,max=3000){return String(value??"").trim().slice(0,m
 function headers(key:string){return {apikey:key,Authorization:`Bearer ${key}`,"Content-Type":"application/json"}}
 function hashToken(token:string){return createHash("sha256").update(token).digest("hex")}
 
+const nigeriaSeed=[
+ {company_name:"Pericles Security & Guards Ltd",contact_name:"Operations Team",email:"periclesguards@gmail.com",phone:"+234 912 043 1254",countries:"Nigeria, Lagos",services:"Protocol Escort, Close Protection, Armed Guards, Event Security, Guarding, Risk Assessment",rating:4,notes:"Official public contact verified from periclesguards.com.",status:"Active"},
+ {company_name:"Executive Guards Limited",contact_name:"Operations Team",email:"info@executiveguardsng.com",phone:"+234 708 121 6342",countries:"Nigeria, Plateau State, Jos",services:"Executive Protection, Security Guarding, Security Consultancy, Surveillance Systems",rating:4,notes:"Official public contact verified from executiveguardsng.com.",status:"Active"},
+ {company_name:"EPSS Security",contact_name:"Operations Team",email:"admin@epsssecurity.com",phone:"+234 806 025 6803",countries:"Nigeria, Lagos, Victoria Island",services:"Security Guarding, Mobile Patrol, Armed and Unarmed Guards, Residential Security, Corporate Security",rating:4,notes:"Official public contact verified from epsssecurity.com.",status:"Active"},
+ {company_name:"Assured Security Services",contact_name:"Operations Team",email:"contact@assuredsecurities.com",phone:"+234 811 477 8270",countries:"Nigeria, Lagos, Lekki",services:"Executive Protection, Corporate Security, Mobile Patrol, Event Security, Secure Transportation",rating:4,notes:"Official public contact verified from assuredsecurities.com.",status:"Active"},
+ {company_name:"Novus Guards",contact_name:"Operations Team",email:"info@novusguards.ng",phone:"+234 902 808 6250",countries:"Nigeria, Lagos, Yaba",services:"Travel Safety, Escort Services, Premises Protection, Events Safety, Background Verification, Concierge Management",rating:4,notes:"Official public contact verified from novusguards.ng.",status:"Active"},
+ {company_name:"Octagon Security Limited",contact_name:"Operations Team",email:"info@octagon.com.ng",phone:"+234 803 572 3682",countries:"Nigeria, Lagos, Abuja, Benin, Port Harcourt",services:"Private Security, Guarding, Corporate Security, Security Consulting, Nationwide Operations",rating:4,notes:"Official public contact verified from octagon.com.ng.",status:"Active"},
+ {company_name:"Iron Lion Security Limited",contact_name:"Operations Team",email:"info@ironlionsecurity.com",phone:"+234 805 337 0077",countries:"Nigeria, Lagos, Ikeja",services:"Executive Protection, Secure Transportation, Airport Protocol, Guarding, Event Security, Emergency Response",rating:4,notes:"Official public contact verified from ironlionsecurity.com.",status:"Active"},
+ {company_name:"LEAD Integrated Security Solutions (LISS)",contact_name:"Service Requests",email:"servicerequest@lissservices.com",phone:"+234 706 607 8722",countries:"Nigeria, Lagos, Lekki",services:"Executive Protection, Secured Transportation, Travel Advisory, Logistics, Luxury Vehicle Rental, Security Technology, Guarding",rating:4,notes:"Official public contact verified from lissservices.com.",status:"Active"}
+];
+
+async function ensureNigeriaSeed(c:{url:string;key:string}){
+ const h=headers(c.key);
+ for(const item of nigeriaSeed){
+  const email=item.email.toLowerCase();
+  const check=await fetch(`${c.url}/rest/v1/contractors?email=eq.${encodeURIComponent(email)}&select=id&limit=1`,{headers:h,cache:"no-store"});
+  if(!check.ok)continue;
+  const existing=await check.json();
+  if(existing.length)continue;
+  await fetch(`${c.url}/rest/v1/contractors`,{method:"POST",headers:{...h,Prefer:"return=minimal"},body:JSON.stringify({...item,email})});
+ }
+}
+
 export async function GET(request:Request){
-  if(!authorised(request))return NextResponse.json({message:"Unauthorised."},{status:401});
-  const c=config();if(!c)return NextResponse.json({message:"Database connection is not configured."},{status:503});
-  const reference=clean(new URL(request.url).searchParams.get("reference"),60);
-  const [contractorsResponse,dispatchesResponse,historyResponse]=await Promise.all([
-    fetch(`${c.url}/rest/v1/contractors?select=*&order=company_name.asc`,{headers:headers(c.key),cache:"no-store"}),
-    reference?fetch(`${c.url}/rest/v1/contractor_dispatches?reference=eq.${encodeURIComponent(reference)}&select=*,contractors(company_name,contact_name,email)&order=created_at.desc`,{headers:headers(c.key),cache:"no-store"}):null,
-    fetch(`${c.url}/rest/v1/contractor_dispatches?select=id,reference,contractor_id,status,quote_amount,currency,created_at,viewed_at,responded_at&order=created_at.desc&limit=2000`,{headers:headers(c.key),cache:"no-store"}),
-  ]);
-  if(!contractorsResponse.ok)return NextResponse.json({message:"Unable to load contractors."},{status:502});
-  const raw=await contractorsResponse.json();
-  const contractors=raw.filter((item:Record<string,unknown>,index:number,array:Record<string,unknown>[])=>array.findIndex(other=>String(other.email).trim().toLowerCase()===String(item.email).trim().toLowerCase())===index);
-  const dispatches=dispatchesResponse&&dispatchesResponse.ok?await dispatchesResponse.json():[];
-  const history=historyResponse.ok?await historyResponse.json():[];
-  return NextResponse.json({contractors,dispatches,contractorHistory:history});
+ if(!authorised(request))return NextResponse.json({message:"Unauthorised."},{status:401});
+ const c=config();if(!c)return NextResponse.json({message:"Database connection is not configured."},{status:503});
+ await ensureNigeriaSeed(c);
+ const reference=clean(new URL(request.url).searchParams.get("reference"),60);
+ const [contractorsResponse,dispatchesResponse,historyResponse]=await Promise.all([
+  fetch(`${c.url}/rest/v1/contractors?select=*&order=company_name.asc`,{headers:headers(c.key),cache:"no-store"}),
+  reference?fetch(`${c.url}/rest/v1/contractor_dispatches?reference=eq.${encodeURIComponent(reference)}&select=*,contractors(company_name,contact_name,email)&order=created_at.desc`,{headers:headers(c.key),cache:"no-store"}):null,
+  fetch(`${c.url}/rest/v1/contractor_dispatches?select=id,reference,contractor_id,status,quote_amount,currency,created_at,viewed_at,responded_at&order=created_at.desc&limit=2000`,{headers:headers(c.key),cache:"no-store"})
+ ]);
+ if(!contractorsResponse.ok)return NextResponse.json({message:"Unable to load contractors."},{status:502});
+ const raw=await contractorsResponse.json();
+ const contractors=raw.filter((item:Record<string,unknown>,index:number,array:Record<string,unknown>[])=>array.findIndex(other=>String(other.email).trim().toLowerCase()===String(item.email).trim().toLowerCase())===index);
+ const dispatches=dispatchesResponse&&dispatchesResponse.ok?await dispatchesResponse.json():[];
+ const history=historyResponse.ok?await historyResponse.json():[];
+ return NextResponse.json({contractors,dispatches,contractorHistory:history});
 }
 
 export async function POST(request:Request){
-  if(!authorised(request))return NextResponse.json({message:"Unauthorised."},{status:401});
-  const c=config();if(!c)return NextResponse.json({message:"Database connection is not configured."},{status:503});
-  const body=await request.json() as Record<string,unknown>,action=clean(body.action,30);
-  if(action==="addContractor"){
-    const companyName=clean(body.companyName,180),contactName=clean(body.contactName,160),email=clean(body.email,180).toLowerCase();
-    if(!companyName||!email)return NextResponse.json({message:"Company name and email are required."},{status:400});
-    const existingResponse=await fetch(`${c.url}/rest/v1/contractors?email=ilike.${encodeURIComponent(email)}&select=*&limit=1`,{headers:headers(c.key),cache:"no-store"});
-    const existing=existingResponse.ok?(await existingResponse.json())[0]:null;
-    if(existing)return NextResponse.json({contractor:existing,alreadyExists:true,message:"Contractor already exists and has been selected."});
-    const response=await fetch(`${c.url}/rest/v1/contractors`,{method:"POST",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({company_name:companyName,contact_name:contactName,email,phone:clean(body.phone,80),countries:clean(body.countries,500),services:clean(body.services,1000),rating:Number(body.rating)||null,notes:clean(body.notes,2000),status:"Active"})});
-    if(!response.ok){const retry=await fetch(`${c.url}/rest/v1/contractors?email=ilike.${encodeURIComponent(email)}&select=*&limit=1`,{headers:headers(c.key),cache:"no-store"});const found=retry.ok?(await retry.json())[0]:null;if(found)return NextResponse.json({contractor:found,alreadyExists:true,message:"Contractor already exists and has been selected."});return NextResponse.json({message:"Unable to add contractor."},{status:502})}
-    return NextResponse.json({contractor:(await response.json())[0],message:"Contractor added successfully."});
-  }
-  if(action==="updateContractor"){
-    const id=clean(body.id,60),email=clean(body.email,180).toLowerCase(),companyName=clean(body.companyName,180);
-    if(!id||!email||!companyName)return NextResponse.json({message:"Company and email are required."},{status:400});
-    const response=await fetch(`${c.url}/rest/v1/contractors?id=eq.${encodeURIComponent(id)}`,{method:"PATCH",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({company_name:companyName,contact_name:clean(body.contactName,160),email,phone:clean(body.phone,80),countries:clean(body.countries,500),services:clean(body.services,1000),rating:Number(body.rating)||null,notes:clean(body.notes,2000),updated_at:new Date().toISOString()})});
-    if(!response.ok)return NextResponse.json({message:"Unable to update contractor. The email may already be in use."},{status:409});
-    return NextResponse.json({contractor:(await response.json())[0],message:"Contractor profile updated successfully."});
-  }
-  if(action==="setContractorStatus"){
-    const id=clean(body.id,60),status=clean(body.status,20);
-    if(!id||!["Active","Inactive"].includes(status))return NextResponse.json({message:"Invalid contractor status."},{status:400});
-    const response=await fetch(`${c.url}/rest/v1/contractors?id=eq.${encodeURIComponent(id)}`,{method:"PATCH",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({status,updated_at:new Date().toISOString()})});
-    if(!response.ok)return NextResponse.json({message:"Unable to update contractor status."},{status:502});
-    return NextResponse.json({contractor:(await response.json())[0],message:status==="Inactive"?"Contractor archived successfully.":"Contractor reactivated successfully."});
-  }
-  if(action!=="dispatch")return NextResponse.json({message:"Invalid action."},{status:400});
-  const reference=clean(body.reference,60),contractorId=clean(body.contractorId,60),brief=clean(body.brief,5000),responseDeadline=clean(body.responseDeadline,60);
-  if(!reference||!contractorId||!brief)return NextResponse.json({message:"Contractor, reference and brief are required."},{status:400});
-  const contractorResponse=await fetch(`${c.url}/rest/v1/contractors?id=eq.${encodeURIComponent(contractorId)}&status=eq.Active&select=*&limit=1`,{headers:headers(c.key),cache:"no-store"});
-  const requestResponse=await fetch(`${c.url}/rest/v1/client_requests?reference=eq.${encodeURIComponent(reference)}&select=reference,service,country,location,required_date,people,urgency&limit=1`,{headers:headers(c.key),cache:"no-store"});
-  const contractor=(await contractorResponse.json())[0],clientRequest=(await requestResponse.json())[0];
-  if(!contractor||!clientRequest)return NextResponse.json({message:"Active contractor or request not found."},{status:404});
-  const token=randomBytes(32).toString("hex"),expiresAt=new Date(Date.now()+7*86400000).toISOString();
-  const insert=await fetch(`${c.url}/rest/v1/contractor_dispatches`,{method:"POST",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({reference,contractor_id:contractorId,token_hash:hashToken(token),status:"Sent",brief,response_deadline:responseDeadline||null,expires_at:expiresAt})});
-  if(!insert.ok)return NextResponse.json({message:"Unable to create contractor dispatch."},{status:502});
-  const dispatch=(await insert.json())[0],portalUrl=`https://security-solutions.africa/contractor-response?token=${token}`;
-  let warning="";const apiKey=process.env.RESEND_API_KEY;
-  if(apiKey){const from=process.env.RESEND_FROM_EMAIL||"Africa Security Solutions <onboarding@resend.dev>";const html=`<div style="font-family:Arial,sans-serif;max-width:680px;margin:auto;color:#171717"><p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9a742f">Africa Security Solutions</p><h1>Contractor availability request</h1><p>Hello ${contractor.contact_name||contractor.company_name},</p><p>Please review the following operational request and submit your availability and quotation.</p><div style="padding:20px;background:#f5f2ea;border-left:4px solid #c9a052"><p><strong>Reference:</strong> ${reference}</p><p><strong>Service:</strong> ${clientRequest.service}</p><p><strong>Location:</strong> ${clientRequest.location}, ${clientRequest.country}</p><p><strong>Required date:</strong> ${clientRequest.required_date||"To be confirmed"}</p><p><strong>Brief:</strong><br>${brief.replace(/\n/g,"<br>")}</p></div><p><a href="${portalUrl}" style="display:inline-block;padding:13px 20px;background:#171717;color:white;text-decoration:none">Review and respond</a></p><p style="font-size:13px;color:#666">This link expires in 7 days. Acceptance is not a final work order until separately confirmed in writing.</p></div>`;const er=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:`Bearer ${apiKey}`,"Content-Type":"application/json"},body:JSON.stringify({from,to:[contractor.email],reply_to:"info@security-solutions.africa",subject:`${reference} — Contractor availability request`,html})});if(!er.ok)warning="Dispatch saved, but the contractor email could not be delivered."}else warning="Dispatch saved, but RESEND_API_KEY is not configured.";
-  return NextResponse.json({dispatch,portalUrl,warning,message:"Request sent to contractor."});
+ if(!authorised(request))return NextResponse.json({message:"Unauthorised."},{status:401});
+ const c=config();if(!c)return NextResponse.json({message:"Database connection is not configured."},{status:503});
+ const body=await request.json() as Record<string,unknown>,action=clean(body.action,30);
+ if(action==="addContractor"){
+  const companyName=clean(body.companyName,180),contactName=clean(body.contactName,160),email=clean(body.email,180).toLowerCase();
+  if(!companyName||!email)return NextResponse.json({message:"Company name and email are required."},{status:400});
+  const existingResponse=await fetch(`${c.url}/rest/v1/contractors?email=ilike.${encodeURIComponent(email)}&select=*&limit=1`,{headers:headers(c.key),cache:"no-store"});
+  const existing=existingResponse.ok?(await existingResponse.json())[0]:null;
+  if(existing)return NextResponse.json({contractor:existing,alreadyExists:true,message:"Contractor already exists and has been selected."});
+  const response=await fetch(`${c.url}/rest/v1/contractors`,{method:"POST",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({company_name:companyName,contact_name:contactName,email,phone:clean(body.phone,80),countries:clean(body.countries,500),services:clean(body.services,1000),rating:Number(body.rating)||null,notes:clean(body.notes,2000),status:"Active"})});
+  if(!response.ok){const retry=await fetch(`${c.url}/rest/v1/contractors?email=ilike.${encodeURIComponent(email)}&select=*&limit=1`,{headers:headers(c.key),cache:"no-store"});const found=retry.ok?(await retry.json())[0]:null;if(found)return NextResponse.json({contractor:found,alreadyExists:true,message:"Contractor already exists and has been selected."});return NextResponse.json({message:"Unable to add contractor."},{status:502})}
+  return NextResponse.json({contractor:(await response.json())[0],message:"Contractor added successfully."});
+ }
+ if(action==="updateContractor"){
+  const id=clean(body.id,60),email=clean(body.email,180).toLowerCase(),companyName=clean(body.companyName,180);
+  if(!id||!email||!companyName)return NextResponse.json({message:"Company and email are required."},{status:400});
+  const response=await fetch(`${c.url}/rest/v1/contractors?id=eq.${encodeURIComponent(id)}`,{method:"PATCH",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({company_name:companyName,contact_name:clean(body.contactName,160),email,phone:clean(body.phone,80),countries:clean(body.countries,500),services:clean(body.services,1000),rating:Number(body.rating)||null,notes:clean(body.notes,2000),updated_at:new Date().toISOString()})});
+  if(!response.ok)return NextResponse.json({message:"Unable to update contractor. The email may already be in use."},{status:409});
+  return NextResponse.json({contractor:(await response.json())[0],message:"Contractor profile updated successfully."});
+ }
+ if(action==="setContractorStatus"){
+  const id=clean(body.id,60),status=clean(body.status,20);
+  if(!id||!["Active","Inactive"].includes(status))return NextResponse.json({message:"Invalid contractor status."},{status:400});
+  const response=await fetch(`${c.url}/rest/v1/contractors?id=eq.${encodeURIComponent(id)}`,{method:"PATCH",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({status,updated_at:new Date().toISOString()})});
+  if(!response.ok)return NextResponse.json({message:"Unable to update contractor status."},{status:502});
+  return NextResponse.json({contractor:(await response.json())[0],message:status==="Inactive"?"Contractor archived successfully.":"Contractor reactivated successfully."});
+ }
+ if(action!=="dispatch")return NextResponse.json({message:"Invalid action."},{status:400});
+ const reference=clean(body.reference,60),contractorId=clean(body.contractorId,60),brief=clean(body.brief,5000),responseDeadline=clean(body.responseDeadline,60);
+ if(!reference||!contractorId||!brief)return NextResponse.json({message:"Contractor, reference and brief are required."},{status:400});
+ const contractorResponse=await fetch(`${c.url}/rest/v1/contractors?id=eq.${encodeURIComponent(contractorId)}&status=eq.Active&select=*&limit=1`,{headers:headers(c.key),cache:"no-store"});
+ const requestResponse=await fetch(`${c.url}/rest/v1/client_requests?reference=eq.${encodeURIComponent(reference)}&select=reference,service,country,location,required_date,people,urgency&limit=1`,{headers:headers(c.key),cache:"no-store"});
+ const contractor=(await contractorResponse.json())[0],clientRequest=(await requestResponse.json())[0];
+ if(!contractor||!clientRequest)return NextResponse.json({message:"Active contractor or request not found."},{status:404});
+ const token=randomBytes(32).toString("hex"),expiresAt=new Date(Date.now()+7*86400000).toISOString();
+ const insert=await fetch(`${c.url}/rest/v1/contractor_dispatches`,{method:"POST",headers:{...headers(c.key),Prefer:"return=representation"},body:JSON.stringify({reference,contractor_id:contractorId,token_hash:hashToken(token),status:"Sent",brief,response_deadline:responseDeadline||null,expires_at:expiresAt})});
+ if(!insert.ok)return NextResponse.json({message:"Unable to create contractor dispatch."},{status:502});
+ const dispatch=(await insert.json())[0],portalUrl=`https://security-solutions.africa/contractor-response?token=${token}`;
+ let warning="";const apiKey=process.env.RESEND_API_KEY;
+ if(apiKey){const from=process.env.RESEND_FROM_EMAIL||"Africa Security Solutions <onboarding@resend.dev>";const html=`<div style="font-family:Arial,sans-serif;max-width:680px;margin:auto;color:#171717"><p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9a742f">Africa Security Solutions</p><h1>Contractor availability request</h1><p>Hello ${contractor.contact_name||contractor.company_name},</p><p>Please review the following operational request and submit your availability and quotation.</p><div style="padding:20px;background:#f5f2ea;border-left:4px solid #c9a052"><p><strong>Reference:</strong> ${reference}</p><p><strong>Service:</strong> ${clientRequest.service}</p><p><strong>Location:</strong> ${clientRequest.location}, ${clientRequest.country}</p><p><strong>Required date:</strong> ${clientRequest.required_date||"To be confirmed"}</p><p><strong>Brief:</strong><br>${brief.replace(/\n/g,"<br>")}</p></div><p><a href="${portalUrl}" style="display:inline-block;padding:13px 20px;background:#171717;color:white;text-decoration:none">Review and respond</a></p><p style="font-size:13px;color:#666">This link expires in 7 days. Acceptance is not a final work order until separately confirmed in writing.</p></div>`;const er=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:`Bearer ${apiKey}`,"Content-Type":"application/json"},body:JSON.stringify({from,to:[contractor.email],reply_to:"info@security-solutions.africa",subject:`${reference} — Contractor availability request`,html})});if(!er.ok)warning="Dispatch saved, but the contractor email could not be delivered."}else warning="Dispatch saved, but RESEND_API_KEY is not configured.";
+ return NextResponse.json({dispatch,portalUrl,warning,message:"Request sent to contractor."});
 }
