@@ -8,6 +8,8 @@ type RequestRecord = {
   details: string; status: string; next_step: string; client_notes?: string; created_at: string; updated_at: string;
 };
 
+type UpdateResult = { request?: RequestRecord; notificationSent?: boolean; warning?: string; message?: string };
+
 const statuses = ["Received", "Under Review", "Proposal Sent", "Confirmed", "Completed"];
 
 export default function OperationsDashboard() {
@@ -17,6 +19,7 @@ export default function OperationsDashboard() {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error">("success");
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -30,6 +33,7 @@ export default function OperationsDashboard() {
       setRequests(result.requests || []);
       if (selected) setSelected((result.requests || []).find((item: RequestRecord) => item.reference === selected.reference) || null);
     } catch (error) {
+      setMessageType("error");
       setMessage(error instanceof Error ? error.message : "Unable to load requests.");
     } finally { setLoading(false); }
   }
@@ -43,15 +47,23 @@ export default function OperationsDashboard() {
       const response = await fetch("/api/operations-dashboard", {
         method: "PATCH",
         headers: { "Content-Type": "application/json", "x-operations-key": key },
-        body: JSON.stringify({ reference: selected.reference, status: data.status, nextStep: data.nextStep, clientNotes: data.clientNotes }),
+        body: JSON.stringify({
+          reference: selected.reference,
+          status: data.status,
+          nextStep: data.nextStep,
+          clientNotes: data.clientNotes,
+          notifyClient: data.notifyClient === "yes",
+        }),
       });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.message || "Unable to update request.");
-      const updated = result.request as RequestRecord;
+      const result = await response.json() as UpdateResult;
+      if (!response.ok || !result.request) throw new Error(result.message || "Unable to update request.");
+      const updated = result.request;
       setSelected(updated);
       setRequests(current => current.map(item => item.reference === updated.reference ? updated : item));
-      setMessage("Request updated successfully.");
+      setMessageType(result.warning ? "error" : "success");
+      setMessage(result.warning || (result.notificationSent ? "Request updated and client notification sent." : "Request updated successfully."));
     } catch (error) {
+      setMessageType("error");
       setMessage(error instanceof Error ? error.message : "Unable to update request.");
     } finally { setSaving(false); }
   }
@@ -77,7 +89,7 @@ export default function OperationsDashboard() {
     <div className="opsAdminWorkspace">
       <aside className="opsAdminList">
         <div className="opsAdminFilters"><input placeholder="Search reference, client or location" value={query} onChange={event => setQuery(event.target.value)} /><select value={statusFilter} onChange={event => setStatusFilter(event.target.value)}><option>All</option>{statuses.map(status => <option key={status}>{status}</option>)}</select></div>
-        <div className="opsAdminRows">{filtered.map(item => <button type="button" className={selected?.reference === item.reference ? "active" : ""} onClick={() => setSelected(item)} key={item.reference}><div><strong>{item.reference}</strong><span>{item.name}{item.company ? ` · ${item.company}` : ""}</span></div><div><b>{item.status}</b><small>{item.location}, {item.country}</small></div></button>)}{!filtered.length && <p className="opsAdminEmpty">No requests match the current filters.</p>}</div>
+        <div className="opsAdminRows">{filtered.map(item => <button type="button" className={selected?.reference === item.reference ? "active" : ""} onClick={() => { setSelected(item); setMessage(""); }} key={item.reference}><div><strong>{item.reference}</strong><span>{item.name}{item.company ? ` · ${item.company}` : ""}</span></div><div><b>{item.status}</b><small>{item.location}, {item.country}</small></div></button>)}{!filtered.length && <p className="opsAdminEmpty">No requests match the current filters.</p>}</div>
       </aside>
 
       <main className="opsAdminDetail">
@@ -88,8 +100,9 @@ export default function OperationsDashboard() {
           <label><span>Client-visible status</span><select name="status" defaultValue={selected.status} key={`${selected.reference}-status`}>{statuses.map(status => <option key={status}>{status}</option>)}</select></label>
           <label><span>Next step shown in Client Portal</span><textarea name="nextStep" rows={4} defaultValue={selected.next_step} key={`${selected.reference}-next`} /></label>
           <label><span>Client-visible notes</span><textarea name="clientNotes" rows={5} defaultValue={selected.client_notes || ""} key={`${selected.reference}-notes`} placeholder="Optional update visible in the client portal." /></label>
-          <div className="opsAdminActions"><button className="button primary" disabled={saving}>{saving ? "Saving…" : "Save status update"}</button><a className="button secondary" href={`mailto:${selected.email}?subject=${encodeURIComponent(selected.reference + " — Africa Security Solutions")}`}>Email client</a></div>
-          {message && <p className={`formMessage ${message.includes("successfully") ? "success" : "error"}`}>{message}</p>}
+          <label className="opsNotifyClient"><input type="checkbox" name="notifyClient" value="yes" defaultChecked /><span><strong>Email this update to the client</strong><small>The email includes the status, next step, client-visible note and a secure Client Portal link.</small></span></label>
+          <div className="opsAdminActions"><button className="button primary" disabled={saving}>{saving ? "Saving…" : "Save status update"}</button><a className="button secondary" href={`mailto:${selected.email}?subject=${encodeURIComponent(selected.reference + " — Africa Security Solutions")}`}>Email client manually</a></div>
+          {message && <p className={`formMessage ${messageType}`}>{message}</p>}
         </form>}
       </main>
     </div>
