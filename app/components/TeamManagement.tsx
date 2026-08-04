@@ -1,0 +1,28 @@
+"use client";
+
+import { FormEvent, useEffect, useMemo, useState } from "react";
+
+type Member={id:string;full_name:string;role:string;phone?:string;email?:string;countries?:string;availability:string;notes?:string};
+type Assigned={team_member_id:string;assignment_role?:string};
+
+export default function TeamManagement({reference,accessKey}:{reference:string;accessKey:string}){
+  const [members,setMembers]=useState<Member[]>([]),[assigned,setAssigned]=useState<Record<string,string>>({});
+  const [loading,setLoading]=useState(true),[saving,setSaving]=useState(false),[message,setMessage]=useState("");
+  const [query,setQuery]=useState("");
+  async function load(){setLoading(true);setMessage("");try{const r=await fetch(`/api/operations-dashboard/team?reference=${encodeURIComponent(reference)}`,{headers:{"x-operations-key":accessKey},cache:"no-store"});const j=await r.json();if(!r.ok)throw new Error(j.message||"Unable to load team.");setMembers(j.members||[]);const map:Record<string,string>={};(j.assigned||[] as Assigned[]).forEach((x:Assigned)=>map[x.team_member_id]=x.assignment_role||"");setAssigned(map)}catch(e){setMessage(e instanceof Error?e.message:"Unable to load team.")}finally{setLoading(false)}}
+  useEffect(()=>{load()},[reference,accessKey]);
+  async function addMember(event:FormEvent<HTMLFormElement>){event.preventDefault();setSaving(true);setMessage("");const data=Object.fromEntries(new FormData(event.currentTarget).entries());try{const r=await fetch("/api/operations-dashboard/team",{method:"POST",headers:{"Content-Type":"application/json","x-operations-key":accessKey},body:JSON.stringify(data)});const j=await r.json();if(!r.ok)throw new Error(j.message||"Unable to add team member.");event.currentTarget.reset();await load();setMessage("Team member added successfully.")}catch(e){setMessage(e instanceof Error?e.message:"Unable to add team member.")}finally{setSaving(false)}}
+  async function saveAssignments(){setSaving(true);setMessage("");try{const assignments=Object.entries(assigned).map(([id,assignmentRole])=>({id,assignmentRole}));const r=await fetch("/api/operations-dashboard/team",{method:"PUT",headers:{"Content-Type":"application/json","x-operations-key":accessKey},body:JSON.stringify({reference,assignments})});const j=await r.json();if(!r.ok)throw new Error(j.message||"Unable to save assigned team.");setMessage("Assigned team saved successfully.")}catch(e){setMessage(e instanceof Error?e.message:"Unable to save assigned team.")}finally{setSaving(false)}}
+  const visible=useMemo(()=>members.filter(m=>`${m.full_name} ${m.role} ${m.countries||""} ${m.availability}`.toLowerCase().includes(query.toLowerCase())),[members,query]);
+  return <section className="teamManagement">
+    <div className="teamHeader"><div><p className="eyebrow">Personnel database</p><h3>Team Management</h3><p>Create a reusable roster and assign available personnel to this operation.</p></div><strong>{Object.keys(assigned).length} assigned</strong></div>
+    <div className="teamWorkspace">
+      <div className="teamRoster">
+        <input className="teamSearch" placeholder="Search name, role, country or availability" value={query} onChange={e=>setQuery(e.target.value)}/>
+        {loading?<p>Loading personnel…</p>:<div className="teamCards">{visible.map(member=>{const selected=Object.prototype.hasOwnProperty.call(assigned,member.id);return <article className={selected?"selected":""} key={member.id}><label className="teamSelect"><input type="checkbox" checked={selected} onChange={e=>setAssigned(current=>{const next={...current};if(e.target.checked)next[member.id]=member.role;else delete next[member.id];return next})}/><span><strong>{member.full_name}</strong><small>{member.role}</small></span></label><div className="teamMeta"><span>{member.availability}</span>{member.countries&&<small>{member.countries}</small>}{member.phone&&<small>{member.phone}</small>}</div>{selected&&<input placeholder="Role on this assignment" value={assigned[member.id]} onChange={e=>setAssigned(current=>({...current,[member.id]:e.target.value}))}/>}</article>})}{!visible.length&&<p className="opsAdminEmpty">No personnel match the search.</p>}</div>}
+        <button className="button primary" type="button" onClick={saveAssignments} disabled={saving}>{saving?"Saving…":"Save assigned team"}</button>
+      </div>
+      <form className="teamCreate" onSubmit={addMember}><h4>Add team member</h4><label><span>Full name</span><input name="fullName" required/></label><label><span>Primary role</span><select name="role" required><option value="">Select role</option><option>Operations Manager</option><option>Team Leader</option><option>Close Protection Officer</option><option>Security Driver</option><option>Journey Manager</option><option>Airport Representative</option><option>Medical Support</option><option>Local Partner</option><option>Other</option></select></label><label><span>Phone</span><input name="phone"/></label><label><span>Email</span><input name="email" type="email"/></label><label><span>Countries / cities</span><input name="countries" placeholder="Nigeria, Ghana, Lagos"/></label><label><span>Availability</span><select name="availability" defaultValue="Available"><option>Available</option><option>Assigned</option><option>Unavailable</option><option>On Leave</option></select></label><label><span>Internal notes</span><textarea name="notes" rows={3}/></label><button className="button secondary" disabled={saving}>Add to roster</button></form>
+    </div>{message&&<p className={message.includes("successfully")?"formMessage success":"formMessage error"}>{message}</p>}
+  </section>
+}
