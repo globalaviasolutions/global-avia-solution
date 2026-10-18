@@ -1,7 +1,8 @@
 import ServicePage from "../components/ServicePage";
 
 export const metadata = {
-  title: "Executive Protection in Nigeria | Global Avia Solution",
+  title: "Executive Protection Services in Nigeria",
+  alternates: { canonical: "/executive-protection" },
   description: "Discreet executive protection for international visitors, corporate leaders, diplomats, and VIP guests operating in Nigeria.",
 };
 
