@@ -45,6 +45,7 @@ export async function POST(request:Request){try{
 
   const apiKey=process.env.RESEND_API_KEY;
   let internalEmailSent=false;
+  let clientEmailSent=false;
 
   if(apiKey){
     const internalHtml=`<h2>New Africa Security Solutions website request</h2><p><strong>Reference:</strong> ${escapeHtml(reference)}</p><p><strong>Request type:</strong> ${escapeHtml(requestType)}</p><p><strong>Urgency:</strong> ${escapeHtml(urgency)}</p><hr><p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Company:</strong> ${escapeHtml(company||"Not provided")}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p><p><strong>Phone / WhatsApp:</strong> ${escapeHtml(phone||"Not provided")}</p><p><strong>Service:</strong> ${escapeHtml(service)}</p><p><strong>Country:</strong> ${escapeHtml(country)}</p><p><strong>City / location:</strong> ${escapeHtml(location)}</p><p><strong>Required start date:</strong> ${escapeHtml(requiredDate||"Not specified")}</p><p><strong>Travellers / personnel:</strong> ${escapeHtml(people||"Not specified")}</p><p><strong>Assignment details:</strong></p><p>${escapeHtml(details).replace(/\n/g,"<br>")}</p>`;
@@ -58,6 +59,7 @@ export async function POST(request:Request){try{
     const clientHtml=`<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#1d2422"><p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9a742f">Africa Security Solutions</p><h1 style="font-size:30px">Your request has been received.</h1><p>Hello ${escapeHtml(name)},</p><p>Thank you for contacting Africa Security Solutions. Your request has been recorded for operational review.</p><div style="padding:20px;border:1px solid #d6bd87;background:#faf7f0;margin:24px 0"><strong>Reference number</strong><div style="font-size:22px;margin-top:8px;letter-spacing:1px">${escapeHtml(reference)}</div></div><p><strong>Service:</strong> ${escapeHtml(service)}<br><strong>Location:</strong> ${escapeHtml(location)}, ${escapeHtml(country)}<br><strong>Urgency:</strong> ${escapeHtml(urgency)}</p><h2 style="font-size:20px">What happens next</h2><ol><li>Our team reviews the information supplied.</li><li>We may request clarification or additional operational details.</li><li>Scope, lawful availability and commercial terms are confirmed separately.</li></ol><p>Please keep the reference number in future correspondence. Submission of this form does not confirm deployment or service availability.</p><p><a href="https://security-solutions.africa/client-portal" style="display:inline-block;padding:12px 18px;background:#111816;color:#fff;text-decoration:none">Open client portal</a></p><p style="font-size:13px;color:#66706d">Africa Security Solutions<br>info@security-solutions.africa</p></div>`;
     try{
       await sendEmail(apiKey,{from,to:[email],reply_to:"info@security-solutions.africa",subject:`Request received — ${reference}`,html:clientHtml});
+      clientEmailSent=true;
     }catch(error){
       console.error("Resend client confirmation error:",error);
     }
@@ -68,11 +70,12 @@ export async function POST(request:Request){try{
   }
 
   return NextResponse.json({
-    message:saved
-      ? "Your request has been recorded for operational review."
-      : "Your request has been delivered to our operations team.",
+    message:internalEmailSent
+      ? "Your request has been emailed to our operations team."
+      : "Your request was saved in the client portal, but the email notification failed. Please email info@security-solutions.africa directly and quote your reference.",
     reference,
-    emailConfirmationAvailable:Boolean(apiKey),
+    notificationEmailSent:internalEmailSent,
+    emailConfirmationSent:clientEmailSent,
   });
 }catch(error){
   console.error("Contact form error:",error);
