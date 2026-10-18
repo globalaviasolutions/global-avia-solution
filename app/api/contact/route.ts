@@ -41,7 +41,13 @@ export async function POST(request:Request){try{
 
   const reference=createReference(),company=clean(body.company,120),phone=clean(body.phone,50),requiredDate=clean(body.date,30),people=clean(body.people,20),from=process.env.RESEND_FROM_EMAIL||"Africa Security Solutions <onboarding@resend.dev>";
 
-  const saved=await savePortalRequest({reference,email,name,company,phone,request_type:requestType,urgency,service,country,location,required_date:requiredDate,people,details,status:"Received",next_step:"Our operations team will review the request and contact you with the next steps."});
+  let saved=false;
+  try{
+    saved=await savePortalRequest({reference,email,name,company,phone,request_type:requestType,urgency,service,country,location,required_date:requiredDate,people,details,status:"Received",next_step:"Our operations team will review the request and contact you with the next steps."});
+  }catch(error){
+    // An unavailable CRM must not prevent a valid enquiry reaching operations by email.
+    console.error("Client portal database unavailable:",error);
+  }
 
   const apiKey=process.env.RESEND_API_KEY;
   let internalEmailSent=false;
@@ -71,7 +77,7 @@ export async function POST(request:Request){try{
 
   return NextResponse.json({
     message:internalEmailSent
-      ? "Your request has been emailed to our operations team."
+      ? saved?"Your request has been emailed to our operations team and saved in the client portal.":"Your request has been emailed to our operations team. The client portal is temporarily unavailable; keep your reference number."
       : "Your request was saved in the client portal, but the email notification failed. Please email info@security-solutions.africa directly and quote your reference.",
     reference,
     notificationEmailSent:internalEmailSent,
