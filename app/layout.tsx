@@ -59,5 +59,6 @@ export const metadata: Metadata = {
   formatDetection:{telephone:false,email:false,address:false},robots:{index:true,follow:true,googleBot:{index:true,follow:true,"max-image-preview":"large","max-snippet":-1,"max-video-preview":-1}},
   openGraph:{title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",url:"https://security-solutions.africa",siteName:"Africa Security Solutions",images:[{url:"/opengraph-image",width:1200,height:630,alt:"Africa Security Solutions"}],locale:"en_GB",type:"website"},
   twitter:{card:"summary_large_image",title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",images:["/opengraph-image"]},
+  verification:{google:"ZP2dGhYt2g5i-iRSQ7jnlybSaiOJY6K5HRHQkcQotmc"},
 };
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body><a className="skipLink" href="#main-content">Skip to main content</a><StructuredData/><SiteHeader/>{children}<SiteFooter/><CookieConsent/><SecurityAssistant/><RegionalNetworkMount/><ProcessExperienceMount/><HomeQuickBriefMount/><CinematicHeroMount/><HomeOperationsMapMount/><SitePolish/><GlobalEffects/><Analytics/></body></html>}
