@@ -51,8 +51,8 @@ import "./contractor-dispatch.css";
 export const viewport: Viewport = { width:"device-width", initialScale:1, maximumScale:5, themeColor:"#0b0b0b", colorScheme:"dark" };
 export const metadata: Metadata = {
   metadataBase:new URL("https://security-solutions.africa"), applicationName:"Africa Security Solutions", manifest:"/manifest.webmanifest",
-  title:{default:"Africa Security Solutions | Professional Security Across Africa",template:"%s | Africa Security Solutions"},
-  description:"Executive protection, secure transportation, corporate security, journey management, airport and crew security, and risk consulting across Nigeria and West Africa.",
+  title:{default:"Security Services in Nigeria | Africa Security Solutions",template:"%s | Africa Security Solutions"},
+  description:"Security services in Lagos, Abuja and across Nigeria: executive protection, secure transportation, airport and crew security, corporate security and journey management.",
   keywords:["security services Africa","executive protection Nigeria","secure transportation Lagos","airport crew security","journey management Africa","corporate security Nigeria"],
   authors:[{name:"Africa Security Solutions"}],creator:"Africa Security Solutions",publisher:"Africa Security Solutions",category:"Business Services",
   icons:{icon:"/icon.svg",shortcut:"/icon.svg",apple:"/icon.svg"},appleWebApp:{capable:true,title:"Africa Security",statusBarStyle:"black-translucent"},
