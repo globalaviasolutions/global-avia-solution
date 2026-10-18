@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://global-avia-solution.vercel.app/sitemap.xml",
+    sitemap: "https://security-solutions.africa/sitemap.xml",
   };
 }
