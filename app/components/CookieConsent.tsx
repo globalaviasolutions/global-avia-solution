@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/next";
 
 type Consent = "accepted" | "essential" | null;
 const STORAGE_KEY = "ass-cookie-consent";
@@ -36,6 +37,7 @@ export default function CookieConsent() {
     window.localStorage.setItem(STORAGE_KEY, choice);
     setConsent(choice);
     if (choice === "accepted" && measurementId) loadAnalytics(measurementId);
+    if (choice === "essential" && consent === "accepted") window.location.reload();
   }
 
   useEffect(() => {
@@ -44,15 +46,18 @@ export default function CookieConsent() {
     return () => window.removeEventListener("open-cookie-preferences", reopen);
   }, []);
 
-  if (!ready || consent) return null;
+  if (!ready) return null;
 
   return (
+    <>
+    {consent === "accepted" && <Analytics />}
+    {!consent && (
     <aside className="cookieBanner" role="dialog" aria-label="Cookie preferences" aria-live="polite">
       <div>
         <p className="cookieEyebrow">Privacy choices</p>
         <h2>We respect your privacy.</h2>
         <p>
-          Essential storage keeps the website working. Optional analytics, when configured, helps us understand website usage and is loaded only after consent.
+          Essential storage keeps the website working. Optional Google and Vercel analytics help us understand website usage and are loaded only after consent.
           Read our <a href="/privacy">Privacy Policy</a>.
         </p>
       </div>
@@ -61,5 +66,7 @@ export default function CookieConsent() {
         <button type="button" className="button primary" onClick={() => save("accepted")}>Accept analytics</button>
       </div>
     </aside>
+    )}
+    </>
   );
 }

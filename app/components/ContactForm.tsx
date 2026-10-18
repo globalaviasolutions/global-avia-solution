@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 
 type FormStatus = "idle" | "sending" | "success" | "error";
-type ContactResult = { message?: string; reference?: string };
+type ContactResult = { message?: string; reference?: string; notificationEmailSent?: boolean; emailConfirmationSent?: boolean };
 type BriefSummary = { mission?: string; market?: string; location?: string; timing?: string; service?: string };
 
 const serviceValues = ["Executive Protection","Airport & Crew Security","Secure Transportation","Corporate Security","Journey Management","Security Consulting","Multiple Services"];
@@ -15,6 +15,8 @@ export default function ContactForm(){
   const [message,setMessage]=useState("");
   const [reference,setReference]=useState("");
   const [submittedEmail,setSubmittedEmail]=useState("");
+  const [notificationEmailSent,setNotificationEmailSent]=useState(false);
+  const [emailConfirmationSent,setEmailConfirmationSent]=useState(false);
   const [copied,setCopied]=useState(false);
   const [brief,setBrief]=useState<BriefSummary>({});
   const startedAt=useRef(Date.now());
@@ -45,7 +47,7 @@ export default function ContactForm(){
     try{
       const response=await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
       const result=(await response.json()) as ContactResult;if(!response.ok)throw new Error(result.message||"Unable to send the request.");
-      setSubmittedEmail(email);setStatus("success");setReference(result.reference||"");setMessage(result.message||"Your request has been sent to our operations team.");
+      setSubmittedEmail(email);setStatus("success");setReference(result.reference||"");setMessage(result.message||"Your request has been recorded.");setNotificationEmailSent(result.notificationEmailSent===true);setEmailConfirmationSent(result.emailConfirmationSent===true);
       form.reset();startedAt.current=Date.now();window.scrollTo({top:form.getBoundingClientRect().top+window.scrollY-120,behavior:"smooth"});
     }catch(error){setStatus("error");setMessage(error instanceof Error?error.message:"Unable to send the request.")}
   }
@@ -56,7 +58,7 @@ export default function ContactForm(){
   if(status==="success")return <section className="requestSuccess" role="status" aria-live="polite">
     <div className="requestSuccessMark" aria-hidden="true">✓</div>
     <p className="eyebrow">Request received</p>
-    <h2>Your operational request is now under review.</h2>
+    <h2>{notificationEmailSent?"Your request has been sent to operations.":"Your request was saved — please email our team."}</h2>
     <p>{message}</p>
     <div className="requestSuccessReference"><span>Reference number</span><strong>{reference}</strong><button type="button" onClick={copyReference}>{copied?"Copied":"Copy"}</button></div>
     <div className="requestSuccessSteps">
@@ -64,8 +66,8 @@ export default function ContactForm(){
       <article><span>02</span><div><h3>Clarification</h3><p>Our team may request additional itinerary or traveller details.</p></div></article>
       <article><span>03</span><div><h3>Confirmation</h3><p>Availability, lawful delivery, scope and commercial terms are confirmed separately.</p></div></article>
     </div>
-    <p className="requestSuccessEmail">A confirmation has been sent to <strong>{submittedEmail}</strong>. Check spam or junk folders if it does not appear.</p>
-    <div className="requestSuccessActions"><a className="button primary" href="/client-portal">Open client portal</a><a className="button secondary" href={`mailto:info@security-solutions.africa?subject=${encodeURIComponent(`Request ${reference}`)}`}>Email operations team</a><button type="button" className="textButton" onClick={()=>{setStatus("idle");setReference("");setSubmittedEmail("");setMessage("")}}>Submit another request</button></div>
+    <p className="requestSuccessEmail">{emailConfirmationSent?<>A confirmation email was accepted for sending to <strong>{submittedEmail}</strong>. Check spam or junk folders if it does not appear.</>:"An email confirmation could not be sent. Save your reference number and contact our team directly."}</p>
+    <div className="requestSuccessActions"><a className="button primary" href={notificationEmailSent?"/client-portal":`mailto:info@security-solutions.africa?subject=${encodeURIComponent(`Request ${reference}`)}`}>{notificationEmailSent?"Open client portal":"Email operations team"}</a>{notificationEmailSent&&<a className="button secondary" href={`mailto:info@security-solutions.africa?subject=${encodeURIComponent(`Request ${reference}`)}`}>Email operations team</a>}<button type="button" className="textButton" onClick={()=>{setStatus("idle");setReference("");setSubmittedEmail("");setMessage("")}}>Submit another request</button></div>
     <p className="requestSuccessDisclaimer">Submission does not confirm deployment, response time or service availability.</p>
   </section>;
 
