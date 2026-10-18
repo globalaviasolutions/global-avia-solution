@@ -1,7 +1,8 @@
 import ServicePage from "../components/ServicePage";
 
 export const metadata = {
-  title: "Secure Transportation in Nigeria | Global Avia Solution",
+  title: "Secure Transportation in Lagos & Nigeria",
+  alternates: { canonical: "/secure-transportation" },
   description: "Secure airport transfers, professional drivers, route planning, and journey management for clients operating in Nigeria.",
 };
 
