@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import ServicePage from "../components/ServicePage";
 
 export const metadata: Metadata = {
-  title: "Journey Management Nigeria | Global Avia Solution",
+  title: "Journey Management Services in Nigeria",
+  alternates: { canonical: "/journey-management" },
   description: "Route assessment, movement coordination, travel briefings, tracking, and contingency planning across Nigeria.",
 };
 
