@@ -1,7 +1,8 @@
 import ServicePage from "../components/ServicePage";
 
 export const metadata = {
-  title: "Airport & Crew Security in Nigeria | Global Avia Solution",
+  title: "Airport & Crew Security Services in Nigeria",
+  alternates: { canonical: "/airport-crew-security" },
   description: "Airport coordination, crew protection, secure hotel transfers, and aviation security support across Nigeria.",
 };
 
