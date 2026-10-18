@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import ServicePage from "../components/ServicePage";
 
 export const metadata: Metadata = {
-  title: "Corporate Security Nigeria | Global Avia Solution",
+  title: "Corporate Security Services in Nigeria",
+  alternates: { canonical: "/corporate-security" },
   description: "Corporate security planning for offices, facilities, events, projects, and international business teams across Nigeria.",
 };
 
