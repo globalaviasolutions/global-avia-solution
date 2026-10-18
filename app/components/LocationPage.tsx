@@ -7,16 +7,33 @@ type LocationPageProps = {
   focus: string[];
   services: string[];
   environments: string[];
+};const serviceLinks: Record<string, string> = {
+  "Executive protection": "/executive-protection",
+  "Airport and crew security": "/airport-crew-security",
+  "Airport support": "/airport-crew-security",
+  "Secure transportation": "/secure-transportation",
+  "Journey management": "/journey-management",
+  "Corporate security": "/corporate-security",
+  "Security consulting": "/security-consulting",
+  "Risk consulting": "/security-consulting",
 };
 
 export default function LocationPage({ city, eyebrow, title, intro, heroClass, focus, services, environments }: LocationPageProps) {
   return <main>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({
+      "@context":"https://schema.org", "@type":"BreadcrumbList",
+      itemListElement:[
+        {"@type":"ListItem",position:1,name:"Home",item:"https://security-solutions.africa/"},
+        {"@type":"ListItem",position:2,name:"Locations",item:"https://security-solutions.africa/locations"},
+        {"@type":"ListItem",position:3,name:city,item:`https://security-solutions.africa/locations/${city.toLowerCase().replace(/ /g,"-")}`},
+      ],
+    })}} />
     <header className="siteHeader"><a className="brand" href="/"><img src="/logo.svg" alt="Africa Security Solutions" /></a><nav><a href="/services">Services</a><a href="/industries">Industries</a><a href="/coverage">Coverage</a><a href="/locations">Locations</a><a href="/contact">Contact</a><a className="navCta" href="/contact">Request Protection</a></nav></header>
     <section className={`locationHero ${heroClass}`}><div className="serviceHeroOverlay"/><div className="serviceHeroContent"><nav className="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><a href="/locations">Locations</a><span>›</span><span>{city}</span></nav><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="lead">{intro}</p><div className="actions"><a className="button primary" href="/contact">Request support in {city}</a><a className="button secondary" href="mailto:info@security-solutions.africa">Email operations</a></div></div></section>
 
     <section className="locationIntro"><div><p className="eyebrow">Local operating context</p><h2>Planning built around the city and the mission.</h2></div><p>Every request is reviewed against timing, route, traveller profile, destination, local operating conditions, lawful availability and the resources required to support the assignment.</p></section>
 
-    <section className="locationColumns"><article><p className="eyebrow">Operational focus</p><h2>What we assess.</h2><div className="locationList">{focus.map((item)=><span key={item}>{item}</span>)}</div></article><article><p className="eyebrow">Available capabilities</p><h2>Services that can be combined.</h2><div className="locationList">{services.map((item)=><span key={item}>{item}</span>)}</div></article></section>
+    <section className="locationColumns"><article><p className="eyebrow">Operational focus</p><h2>What we assess.</h2><div className="locationList">{focus.map((item)=><span key={item}>{item}</span>)}</div></article><article><p className="eyebrow">Available capabilities</p><h2>Services that can be combined.</h2><div className="locationList">{services.map((item)=><a key={item} href={serviceLinks[item] || "/services"}>{item} →</a>)}</div></article></section>
 
     <section className="locationEnvironments"><div className="sectionHeading"><p className="eyebrow">Typical environments</p><h2>Support for complex schedules and movements.</h2></div><div className="environmentGrid">{environments.map((item,index)=><article key={item}><span>0{index+1}</span><h3>{item}</h3><p>Scope and resources are confirmed only after operational assessment and written acceptance.</p></article>)}</div></section>
 
