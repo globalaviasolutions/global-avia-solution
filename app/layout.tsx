@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import GlobalEffects from "./components/GlobalEffects";
 import StructuredData from "./components/StructuredData";
 import SiteFooter from "./components/SiteFooter";
@@ -61,4 +60,4 @@ export const metadata: Metadata = {
   twitter:{card:"summary_large_image",title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",images:["/opengraph-image"]},
   verification:{google:"ZP2dGhYt2g5i-iRSQ7jnlybSaiOJY6K5HRHQkcQotmc"},
 };
-export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body><a className="skipLink" href="#main-content">Skip to main content</a><StructuredData/><SiteHeader/>{children}<SiteFooter/><CookieConsent/><SecurityAssistant/><RegionalNetworkMount/><ProcessExperienceMount/><HomeQuickBriefMount/><CinematicHeroMount/><HomeOperationsMapMount/><SitePolish/><GlobalEffects/><Analytics/></body></html>}
+export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body><a className="skipLink" href="#main-content">Skip to main content</a><StructuredData/><SiteHeader/>{children}<SiteFooter/><CookieConsent/><SecurityAssistant/><RegionalNetworkMount/><ProcessExperienceMount/><HomeQuickBriefMount/><CinematicHeroMount/><HomeOperationsMapMount/><SitePolish/><GlobalEffects/></body></html>}

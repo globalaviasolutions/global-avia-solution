@@ -2,7 +2,7 @@
   min-height: 780px;
   position: relative;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   padding: 160px 7vw 90px;
   background-size: cover;
   background-position: center;
