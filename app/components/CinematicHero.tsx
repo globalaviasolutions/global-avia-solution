@@ -43,13 +43,13 @@ export default function CinematicHero(){
         <p className="eyebrow">{active.eyebrow}</p>
         <h1>{active.line1}<br/><span>{active.line2}</span></h1>
         <p>{active.summary}</p>
-        <div className="cinematicActions"><a className="button primary" href="/contact">Request consultation</a><a className="button secondary" href={active.href}>{active.action}</a></div>
+        <div className="cinematicActions"><a className="button primary" href="https://wa.me/15028539373?text=Hello%2C%20I%20would%20like%20to%20request%20security%20services%20in%20West%20Africa.%20Please%20contact%20me%20with%20further%20details." target="_blank" rel="noopener noreferrer">Request consultation</a><a className="button secondary" href={active.href}>{active.action}</a></div>
         <div className="cinematicDots" role="tablist" aria-label="Hero capabilities">{slides.map((slide,i)=><button key={slide.eyebrow} type="button" role="tab" aria-label={`Show ${slide.eyebrow}`} aria-selected={i===index} className={i===index?"active":""} onClick={()=>setIndex(i)}><span>{String(i+1).padStart(2,"0")}</span></button>)}</div>
       </div>
 
       <aside className="cinematicOperations">
         <div className="cinematicPanelHead"><span><i/>Operations overview</span><small>Assignment-based model</small></div>
-        <div className="cinematicPanelRows"><div><span>Operating focus</span><strong>Nigeria</strong></div><div><span>Regional capability</span><strong>West Africa</strong></div><div><span>Selected service</span><strong>{active.eyebrow}</strong></div></div>
+        <div className="cinematicPanelRows"><div><span>Operating focus</span><strong>West Africa</strong></div><div><span>Regional capability</span><strong>West Africa</strong></div><div><span>Selected service</span><strong>{active.eyebrow}</strong></div></div>
         <div className="cinematicPanelLinks"><a href="/operations-center">Open Operations Centre →</a><a href="/coverage">View regional coverage →</a></div>
       </aside>
 
