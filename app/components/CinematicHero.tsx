@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const slides = [
   { eyebrow:"Executive protection", line1:"Protecting people.", line2:"Enabling critical movement.", summary:"Discreet protective planning for executives, VIP travellers and international teams operating across Nigeria and selected African markets.", href:"/executive-protection", action:"Explore executive protection" },
@@ -12,32 +12,18 @@ const slides = [
 export default function CinematicHero(){
   const [index,setIndex]=useState(0);
   const [ready,setReady]=useState(false);
-  const heroRef=useRef<HTMLElement>(null);
   const active=useMemo(()=>slides[index], [index]);
 
   useEffect(()=>{
     const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const readyTimer=window.setTimeout(()=>setReady(true), reduced?0:650);
-    if(reduced) return ()=>window.clearTimeout(readyTimer);
-    const timer=window.setInterval(()=>setIndex(v=>(v+1)%slides.length),6500);
-    return ()=>{window.clearTimeout(readyTimer);window.clearInterval(timer)};
+    return ()=>window.clearTimeout(readyTimer);
   },[]);
 
-  const move=(event:React.PointerEvent<HTMLElement>)=>{
-    const element=heroRef.current;
-    if(!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const rect=element.getBoundingClientRect();
-    const x=(event.clientX-rect.left)/rect.width;
-    const y=(event.clientY-rect.top)/rect.height;
-    element.style.setProperty("--cinema-x",`${x*100}%`);
-    element.style.setProperty("--cinema-y",`${y*100}%`);
-    element.style.setProperty("--cinema-tilt-x",`${(x-.5)*8}px`);
-    element.style.setProperty("--cinema-tilt-y",`${(y-.5)*6}px`);
-  };
 
   return <>
     <div className={`cinematicLoader ${ready?"isHidden":""}`} aria-hidden="true"><img src="/logo.svg" alt=""/><i/></div>
-    <section ref={heroRef} onPointerMove={move} className={`cinematicHero slide${index+1}`} id="top" aria-label="Africa Security Solutions">
+    <section className={`cinematicHero slide${index+1}`} id="top" aria-label="Africa Security Solutions">
       <div className="cinematicScene" aria-hidden="true"><div className="cinematicSceneImage"/><div className="cinematicSceneGlow"/><div className="cinematicSceneGrid"/><div className="cinematicParticles"><i/><i/><i/><i/></div></div>
       <div className="cinematicCopy" key={active.eyebrow}>
         <p className="eyebrow">{active.eyebrow}</p>
