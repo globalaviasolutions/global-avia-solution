@@ -127,3 +127,19 @@
 }
 /* Keep geographic imagery on individual city pages and industry-specific
    oil & gas, construction and hospitality visuals intact. */
+
+
+/* Requested homepage hero: private jet with professional close protection detail.
+   Selected image from the first photo option (third-party editorial image).
+   Keep existing dark overlay for accessible headline contrast. */
+.premiumHero.heroV2 {
+  background-image:
+    linear-gradient(90deg, rgba(3,5,5,.94) 0%, rgba(3,5,5,.76) 43%, rgba(3,5,5,.24) 82%),
+    url('https://praetorianep.com/_next/image?q=75&url=%2Fimages%2Fservices%2Fsecure-transportation-airport-fbo.webp&w=3840') !important;
+  background-position: center 43% !important;
+  background-size: cover !important;
+}
+.cinematicHero.slide1 .cinematicSceneImage {
+  background-image: url('https://praetorianep.com/_next/image?q=75&url=%2Fimages%2Fservices%2Fsecure-transportation-airport-fbo.webp&w=3840') !important;
+  background-position: center 43%;
+}
