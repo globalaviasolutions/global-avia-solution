@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   description:"Security services across West Africa, including Lagos and Abuja: executive protection, secure transportation, airport and crew security, corporate security and journey management.",
   keywords:["security services West Africa","executive protection Nigeria","secure transportation Lagos","airport crew security","journey management Africa","corporate security Nigeria"],
   authors:[{name:"Africa Security Solutions"}],creator:"Africa Security Solutions",publisher:"Africa Security Solutions",category:"Business Services",
-  icons:{icon:"/icon.svg",shortcut:"/icon.svg",apple:"/icon.svg"},appleWebApp:{capable:true,title:"Africa Security",statusBarStyle:"black-translucent"},
+  icons:{icon:"/brand-icon.png",shortcut:"/brand-icon.png",apple:"/brand-icon.png"},appleWebApp:{capable:true,title:"Africa Security",statusBarStyle:"black-translucent"},
   formatDetection:{telephone:false,email:false,address:false},robots:{index:true,follow:true,googleBot:{index:true,follow:true,"max-image-preview":"large","max-snippet":-1,"max-video-preview":-1}},
   openGraph:{title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",url:"https://security-solutions.africa",siteName:"Africa Security Solutions",images:[{url:"/opengraph-image",width:1200,height:630,alt:"Africa Security Solutions"}],locale:"en_GB",type:"website"},
   twitter:{card:"summary_large_image",title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",images:["/opengraph-image"]},

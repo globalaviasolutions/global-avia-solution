@@ -25,10 +25,10 @@ export default function OpenGraphImage() {
 
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: "100%", zIndex: 2 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <div style={{ width: 92, height: 92, border: "3px solid #d2aa62", borderRadius: 22, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 42, color: "#f3d38f" }}>A</div>
+          <img src="https://security-solutions.africa/brand-icon.png" alt="" width={92} height={92} style={{ objectFit: "contain" }} />
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 34, letterSpacing: 5, fontWeight: 700 }}>AFRICA</div>
-            <div style={{ fontSize: 20, letterSpacing: 4, color: "#d2aa62" }}>SECURITY SOLUTIONS</div>
+            <div style={{ fontSize: 30, letterSpacing: 3, fontWeight: 700 }}>SECURITY SOLUTIONS</div>
+            <div style={{ fontSize: 24, letterSpacing: 5, color: "#d2aa62" }}>AFRICA</div>
           </div>
         </div>
 

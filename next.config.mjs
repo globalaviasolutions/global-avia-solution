@@ -3,6 +3,8 @@ const nextConfig = {
   poweredByHeader: false,
   async redirects() {
     return [
+      { source: "/logo.svg", destination: "/brand-horizontal.png", permanent: false },
+      { source: "/icon.svg", destination: "/brand-icon.png", permanent: false },
         {
             "source": "/leadership",
             "destination": "/about#governance",
