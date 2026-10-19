@@ -1,6 +1,120 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    return [
+        {
+            "source": "/leadership",
+            "destination": "/about#governance",
+            "permanent": true
+        },
+        {
+            "source": "/capability-statement",
+            "destination": "/about#capability",
+            "permanent": true
+        },
+        {
+            "source": "/careers",
+            "destination": "/about#careers",
+            "permanent": true
+        },
+        {
+            "source": "/faq",
+            "destination": "/about#faq",
+            "permanent": true
+        },
+        {
+            "source": "/standards",
+            "destination": "/about#standards",
+            "permanent": true
+        },
+        {
+            "source": "/locations",
+            "destination": "/coverage#cities",
+            "permanent": true
+        },
+        {
+            "source": "/locations/port-harcourt",
+            "destination": "/coverage#cities",
+            "permanent": true
+        },
+        {
+            "source": "/locations/kano",
+            "destination": "/coverage#cities",
+            "permanent": true
+        },
+        {
+            "source": "/locations/uyo",
+            "destination": "/coverage#cities",
+            "permanent": true
+        },
+        {
+            "source": "/locations/calabar",
+            "destination": "/coverage#cities",
+            "permanent": true
+        },
+        {
+            "source": "/locations/enugu",
+            "destination": "/coverage#cities",
+            "permanent": true
+        },
+        {
+            "source": "/locations/warri",
+            "destination": "/coverage#cities",
+            "permanent": true
+        },
+        {
+            "source": "/industries/aviation",
+            "destination": "/industries#aviation",
+            "permanent": true
+        },
+        {
+            "source": "/industries/oil-gas",
+            "destination": "/industries#oil-gas",
+            "permanent": true
+        },
+        {
+            "source": "/industries/embassies-ngos",
+            "destination": "/industries#embassies-ngos",
+            "permanent": true
+        },
+        {
+            "source": "/industries/corporate-travel",
+            "destination": "/industries#corporate-travel",
+            "permanent": true
+        },
+        {
+            "source": "/industries/construction",
+            "destination": "/industries#construction",
+            "permanent": true
+        },
+        {
+            "source": "/industries/hospitality",
+            "destination": "/industries#hospitality",
+            "permanent": true
+        },
+        {
+            "source": "/resources/travel-security-nigeria",
+            "destination": "/resources#travel-security",
+            "permanent": true
+        },
+        {
+            "source": "/resources/executive-protection-checklist",
+            "destination": "/resources#executive-protection",
+            "permanent": true
+        },
+        {
+            "source": "/resources/airport-arrival-guide",
+            "destination": "/resources#airport-arrivals",
+            "permanent": true
+        },
+        {
+            "source": "/resources/journey-planning-guide",
+            "destination": "/resources#journey-management",
+            "permanent": true
+        }
+    ];
+  },
   async headers() {
     const securityHeaders = [
       { key: "X-Content-Type-Options", value: "nosniff" },

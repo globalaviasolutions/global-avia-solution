@@ -12,25 +12,6 @@ const services = [
   ["Security Consulting", "/security-consulting"],
 ];
 
-const industries = [
-  ["Aviation", "/industries/aviation"],
-  ["Oil & Gas", "/industries/oil-gas"],
-  ["Embassies & NGOs", "/industries/embassies-ngos"],
-  ["Corporate Travel", "/industries/corporate-travel"],
-  ["Construction", "/industries/construction"],
-  ["Hospitality", "/industries/hospitality"],
-];
-
-const company = [
-  ["Operations Centre", "/operations-center"],
-  ["About Us", "/about"],
-  ["Leadership", "/leadership"],
-  ["Standards & Compliance", "/standards"],
-  ["Resources Centre", "/resources"],
-  ["Careers", "/careers"],
-  ["FAQ", "/faq"],
-];
-
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -69,13 +50,12 @@ export default function SiteHeader() {
     <a className="globalBrand" href="/" aria-label="Africa Security Solutions home"><img src="/logo.svg" alt="Africa Security Solutions" /></a>
     <button className={`globalMenuButton ${mobileOpen ? "isOpen" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}><span /><span /><span /></button>
     <nav className={`globalNav ${mobileOpen ? "isOpen" : ""}`} aria-label="Primary navigation">
+      <a href="/" className={isActive(pathname, "/") ? "active" : ""}>Home</a>
       {menu("Services", services, "/services")}
-      {menu("Industries", industries, "/industries")}
-      <a className={isActive(pathname, "/coverage") ? "active" : ""} href="/coverage">Coverage</a>
-      <a className={isActive(pathname, "/locations") ? "active" : ""} href="/locations">Locations</a>
-      {menu("Company", company, "/about")}
+      <a className={isActive(pathname, "/industries") ? "active" : ""} href="/industries">Industries</a>
+      <a className={isActive(pathname, "/coverage") ? "active" : ""} href="/coverage">West Africa</a>
+      <a className={isActive(pathname, "/about") ? "active" : ""} href="/about">About Us</a>
       <a className={isActive(pathname, "/contact") ? "active" : ""} href="/contact">Contact</a>
-      <a className="emergencyNav" href="/emergency-response">Emergency</a>
       <a className="consultationNav" href="https://wa.me/15028539373?text=Hello%2C%20I%20would%20like%20to%20request%20security%20services%20in%20West%20Africa.%20Please%20contact%20me%20with%20further%20details." target="_blank" rel="noopener noreferrer">Request Consultation</a>
     </nav>
   </header>;

@@ -41,6 +41,27 @@ export default function AboutPage() {
         </div>
       </section>
 
+
+      <section className="enterpriseIntro" id="capability">
+        <div><p className="eyebrow">Company capability</p><h2>One point of coordination.</h2></div>
+        <p>Our capability covers executive protection, airport and crew security, secure transportation, corporate security, journey management and risk consulting. Each assignment is scoped against local requirements, timing, available resources and written confirmation.</p>
+      </section>
+      <section className="enterpriseIntro" id="governance">
+        <div><p className="eyebrow">Governance and leadership</p><h2>Clear responsibility for each operation.</h2></div>
+        <p>Corporate direction, operational planning, regional coordination and security advice are distinct functions. Named personnel and credentials are published only after verification; every assignment requires an accountable operational lead.</p>
+      </section>
+      <section className="enterpriseIntro" id="standards">
+        <div><p className="eyebrow">Standards and compliance</p><h2>Lawful, discreet and accountable delivery.</h2></div>
+        <p>Operating principles include lawful authority, partner due diligence, confidentiality, anti-bribery, professional conduct, documented incident escalation and data minimisation. Final policies and licensing details must reflect verified local requirements.</p>
+      </section>
+      <section className="enterpriseIntro" id="careers">
+        <div><p className="eyebrow">Partnerships and careers</p><h2>Work with Africa Security Solutions.</h2></div>
+        <p>Qualified protection personnel, vetted transport operators and specialist partners may contact our team with their credentials and relevant areas of experience.</p>
+      </section>
+      <section className="enterpriseIntro" id="faq">
+        <div><p className="eyebrow">Common questions</p><h2>What happens after a request?</h2></div>
+        <p>We review locations, timing, traveller needs and lawful local capability before proposing a scope. Availability, personnel, vehicles and response times are not guaranteed until confirmed in writing. Urgent enquiries can be sent through WhatsApp.</p>
+      </section>
       <section className="contactSection"><div><p className="eyebrow">Work with us</p><h2>Planning an operation in Africa?</h2><p>Tell us where, when, and what level of support is required.</p></div><a className="button primary" href="/contact">Contact our team</a></section>
     </main>
   );

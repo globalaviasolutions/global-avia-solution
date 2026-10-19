@@ -7,12 +7,12 @@ export const metadata: Metadata = {
 };
 
 const industries = [
-  ["Aviation", "/industries/aviation", "Airport, crew, passenger and ground-movement security coordination."],
-  ["Oil & Gas", "/industries/oil-gas", "Journey management, site movements and protective support for energy operations."],
-  ["Embassies & NGOs", "/industries/embassies-ngos", "Discreet mobility and security planning for diplomatic and humanitarian teams."],
-  ["Corporate Travel", "/industries/corporate-travel", "Executive protection and secure transport for visiting business personnel."],
-  ["Construction", "/industries/construction", "Project-site movement planning, personnel support and risk coordination."],
-  ["Hospitality", "/industries/hospitality", "VIP arrivals, event movements and guest security support."],
+  ["Aviation", "aviation", "Airport, crew, passenger and ground-movement security coordination."],
+  ["Oil & Gas", "oil-gas", "Journey management, site movements and protective support for energy operations."],
+  ["Embassies & NGOs", "embassies-ngos", "Discreet mobility and security planning for diplomatic and humanitarian teams."],
+  ["Corporate Travel", "corporate-travel", "Executive protection and secure transport for visiting business personnel."],
+  ["Construction", "construction", "Project-site movement planning, personnel support and risk coordination."],
+  ["Hospitality", "hospitality", "VIP arrivals, event movements and guest security support."],
 ];
 
 export default function IndustriesPage() {
@@ -31,12 +31,12 @@ export default function IndustriesPage() {
 
       <section className="industryOverviewGrid">
         {industries.map(([title, href, text], index) => (
-          <a href={href} key={title} className="industryOverviewCard">
+          <article id={href} key={title} className="industryOverviewCard">
             <span>0{index + 1}</span>
             <h2>{title}</h2>
             <p>{text}</p>
-            <strong>Explore industry →</strong>
-          </a>
+            <a href={`/contact?industry=${encodeURIComponent(title)}`}>Discuss requirements →</a>
+          </article>
         ))}
       </section>
 

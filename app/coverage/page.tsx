@@ -22,8 +22,8 @@ export default function CoveragePage() {
         <div className="serviceHeroContent">
           <nav className="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><span>Coverage</span></nav>
           <p className="eyebrow">Regional capability</p>
-          <h1>Nigeria first. Regional by design.</h1>
-          <p className="lead">Our primary operating focus is Nigeria, supported by a scalable coordination model for selected assignments across West Africa.</p>
+          <h1>Security coordination across West Africa.</h1>
+          <p className="lead">We assess security requirements across West Africa, with city-specific planning for Lagos and Abuja and regional coordination for other markets.</p>
           <div className="actions"><a className="button primary" href="/contact">Plan an Operation</a><a className="button secondary" href="mailto:info@security-solutions.africa">Email Operations</a></div>
         </div>
       </section>
@@ -33,6 +33,10 @@ export default function CoveragePage() {
         <p>Every request is reviewed against location, route, timing, traveller profile, partner capability and local requirements. Website coverage information does not constitute automatic service confirmation.</p>
       </section>
 
+      <section id="cities" className="coverageIntro">
+        <div><p className="eyebrow">Priority locations</p><h2>City-specific security planning.</h2></div>
+        <p>Explore operational considerations in <a href="/locations/lagos">Lagos</a> and <a href="/locations/abuja">Abuja</a>. Requests for Port Harcourt, Kano, Enugu, Calabar, Uyo, Warri and other markets are assessed through our West Africa coordination model.</p>
+      </section>
       <InteractiveNigeriaMap />
 
       <section className="regionalCoverage">
