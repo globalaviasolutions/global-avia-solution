@@ -46,9 +46,11 @@ export default function GlobalEffects() {
     if (!emergencyLink && window.location.pathname !== "/emergency-response") {
       emergencyLink = document.createElement("a");
       emergencyLink.className = "globalEmergencyLink";
-      emergencyLink.href = "/emergency-response";
+      emergencyLink.href = "https://wa.me/15028539373?text=Hello%2C%20I%20would%20like%20to%20request%20security%20services%20in%20West%20Africa.%20Please%20contact%20me%20with%20further%20details.";
+      emergencyLink.target = "_blank";
+      emergencyLink.rel = "noopener noreferrer";
       emergencyLink.textContent = "Urgent request";
-      emergencyLink.setAttribute("aria-label", "Open urgent operational request information");
+      emergencyLink.setAttribute("aria-label", "Open WhatsApp to send an urgent operational request");
       document.body.appendChild(emergencyLink);
     }
 
