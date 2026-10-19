@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 
 const slides = [
   { eyebrow:"Executive protection", line1:"Protecting people.", line2:"Enabling critical movement.", summary:"Discreet protective planning for executives, VIP travellers and international teams operating across Nigeria and selected African markets.", href:"/executive-protection", action:"Explore executive protection" },
-  { eyebrow:"Airport & crew security", line1:"From touchdown.", line2:"To secure onward movement.", summary:"Airport reception, crew coordination, secure hotel transfers and aviation-linked operational support.", href:"/airport-crew-security", action:"Explore aviation support" },
   { eyebrow:"Secure transportation", line1:"Controlled routes.", line2:"Confident arrival.", summary:"Professional secure transfers, route planning, movement coordination and contingency support for time-sensitive journeys.", href:"/secure-transportation", action:"Explore secure mobility" },
   { eyebrow:"Journey management", line1:"Regional visibility.", line2:"Clear coordination.", summary:"Structured movement planning, communication pathways and operational oversight for complex travel programmes.", href:"/journey-management", action:"Explore journey management" },
 ];
