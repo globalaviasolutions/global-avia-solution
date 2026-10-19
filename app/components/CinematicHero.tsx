@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const slides = [
   { eyebrow:"Executive protection", line1:"Protecting people.", line2:"Enabling critical movement.", summary:"Discreet protective planning for executives, VIP travellers and international teams operating across Nigeria and selected African markets.", href:"/executive-protection", action:"Explore executive protection" },
+  { eyebrow:"Airport & crew security", line1:"From touchdown.", line2:"To secure onward movement.", summary:"Airport reception, crew coordination, secure hotel transfers and aviation-linked operational support.", href:"/airport-crew-security", action:"Explore aviation support" },
   { eyebrow:"Secure transportation", line1:"Controlled routes.", line2:"Confident arrival.", summary:"Professional secure transfers, route planning, movement coordination and contingency support for time-sensitive journeys.", href:"/secure-transportation", action:"Explore secure mobility" },
   { eyebrow:"Journey management", line1:"Regional visibility.", line2:"Clear coordination.", summary:"Structured movement planning, communication pathways and operational oversight for complex travel programmes.", href:"/journey-management", action:"Explore journey management" },
 ];
@@ -32,6 +33,12 @@ export default function CinematicHero(){
         <div className="cinematicDots" role="tablist" aria-label="Hero capabilities">{slides.map((slide,i)=><button key={slide.eyebrow} type="button" role="tab" aria-label={`Show ${slide.eyebrow}`} aria-selected={i===index} className={i===index?"active":""} onClick={()=>setIndex(i)}><span>{String(i+1).padStart(2,"0")}</span></button>)}</div>
       </div>
 
+
+      <aside className="cinematicOperations">
+        <div className="cinematicPanelHead"><span><i/>Operations overview</span><small>Assignment-based model</small></div>
+        <div className="cinematicPanelRows"><div><span>Operating focus</span><strong>West Africa</strong></div><div><span>Regional capability</span><strong>West Africa</strong></div><div><span>Selected service</span><strong>{active.eyebrow}</strong></div></div>
+        <div className="cinematicPanelLinks"><a href="/operations-center">Open Operations Centre →</a><a href="/coverage">View regional coverage →</a></div>
+      </aside>
 
       <div className="cinematicFloatCard cardProtection"><span>01</span><strong>Executive Protection</strong></div>
       <div className="cinematicFloatCard cardAviation"><span>02</span><strong>Airport & Crew Security</strong></div>
