@@ -46,6 +46,7 @@ import "./home-3d-map.css";
 import "./site-polish.css";
 import "./operations-dashboard.css";
 import "./contractor-dispatch.css";
+import "./security-photography.css";
 
 export const viewport: Viewport = { width:"device-width", initialScale:1, maximumScale:5, themeColor:"#0b0b0b", colorScheme:"dark" };
 export const metadata: Metadata = {
