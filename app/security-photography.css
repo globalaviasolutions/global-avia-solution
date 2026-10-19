@@ -68,3 +68,62 @@
     url('https://images.unsplash.com/photo-1752171558159-a39940b3d142?auto=format&fit=crop&w=1600&q=82') !important;
   background-position: center;
 }
+
+/* Interior pages: the same editorial security language, with page-specific
+   context and a consistent dark-to-clear gradient for readable copy. */
+.servicesOverviewHero,
+.aboutHero,
+.leadershipHero,
+.contactHero,
+.industriesOverviewHero,
+.careersHero {
+  background-image:
+    linear-gradient(90deg,rgba(3,5,6,.93) 0%,rgba(3,5,6,.72) 44%,rgba(3,5,6,.30) 100%),
+    url('https://images.unsplash.com/photo-1762474293029-6a7f3698312c?auto=format&fit=crop&w=2200&q=84') !important;
+  background-position:center 35%;
+  background-size:cover;
+}
+.resourcesHero,
+.guideHero {
+  background-image:
+    linear-gradient(90deg,rgba(3,5,6,.94) 0%,rgba(3,5,6,.70) 46%,rgba(3,5,6,.27) 100%),
+    url('https://images.unsplash.com/photo-1662242723207-13ad21d3816f?auto=format&fit=crop&w=2200&q=84') !important;
+  background-position:center;
+  background-size:cover;
+}
+.emergencyHero {
+  background-image:
+    linear-gradient(90deg,rgba(15,3,3,.95) 0%,rgba(12,3,3,.69) 50%,rgba(12,3,3,.22) 100%),
+    url('https://images.unsplash.com/photo-1752171558159-a39940b3d142?auto=format&fit=crop&w=2200&q=84') !important;
+  background-position:center;
+  background-size:cover;
+}
+.coveragePageHero,
+.locationsHero {
+  background:
+    linear-gradient(90deg,rgba(3,5,6,.94) 0%,rgba(3,5,6,.68) 52%,rgba(3,5,6,.25) 100%),
+    url('https://images.unsplash.com/photo-1551650921-1cf9ec0c9650?auto=format&fit=crop&w=2200&q=84') center / cover no-repeat !important;
+}
+.industryAviation {
+  background-image:
+    linear-gradient(90deg,rgba(3,5,6,.95),rgba(3,5,6,.28)),
+    url('https://images.unsplash.com/photo-1747745433340-98ff571466b4?auto=format&fit=crop&w=2200&q=84') !important;
+}
+.industryEmbassies {
+  background-image:
+    linear-gradient(90deg,rgba(3,5,6,.95),rgba(3,5,6,.28)),
+    url('https://images.unsplash.com/photo-1762474293029-6a7f3698312c?auto=format&fit=crop&w=2200&q=84') !important;
+}
+.industryCorporateTravel {
+  background-image:
+    linear-gradient(90deg,rgba(3,5,6,.95),rgba(3,5,6,.28)),
+    url('https://images.unsplash.com/photo-1551650921-1cf9ec0c9650?auto=format&fit=crop&w=2200&q=84') !important;
+}
+.scenarioExecutive {
+  background-image:url('https://images.unsplash.com/photo-1762474293029-6a7f3698312c?auto=format&fit=crop&w=1200&q=82') !important;
+}
+.scenarioAirport {
+  background-image:url('https://images.unsplash.com/photo-1747745433340-98ff571466b4?auto=format&fit=crop&w=1200&q=82') !important;
+}
+/* Keep geographic imagery on individual city pages and industry-specific
+   oil & gas, construction and hospitality visuals intact. */
