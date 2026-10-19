@@ -47,10 +47,10 @@ export default function PremiumHome(){
         <p className="eyebrow">Africa Security Solutions</p>
         <h1>Securing critical<br/>operations <span>across Africa.</span></h1>
         <p className="premiumHeroLead">Executive protection, secure transportation, airport and crew security, journey management and operational coordination for international organisations and private clients.</p>
-        <div className="premiumHeroActions"><a className="button primary" href="/contact">Request consultation</a><a className="button secondary" href="/operations-center">Explore operations centre</a></div>
+        <div className="premiumHeroActions"><a className="button primary" href="https://wa.me/15028539373?text=Hello%2C%20I%20would%20like%20to%20request%20security%20services%20in%20West%20Africa.%20Please%20contact%20me%20with%20further%20details." target="_blank" rel="noopener noreferrer">Request consultation</a><a className="button secondary" href="/operations-center">Explore operations centre</a></div>
       </div>
       <aside className="premiumHeroPanel">
-        <div><span>Operating focus</span><strong>Nigeria</strong></div>
+        <div><span>Operating focus</span><strong>West Africa</strong></div>
         <div><span>Regional model</span><strong>West Africa</strong></div>
         <div><span>Coordination</span><strong>Assignment based</strong></div>
         <a href="/coverage">View regional capability →</a>
@@ -59,7 +59,7 @@ export default function PremiumHome(){
     </section>
 
     <section className="premiumStatus" aria-label="Service availability information">
-      {["Nigeria operating focus","Airport & crew support","Executive protection","Regional coordination","Urgent request guidance"].map((item,i)=><span key={item}><i className={i===0?"primary":""}/>{item}</span>)}
+      {["West Africa operating focus","Airport & crew support","Executive protection","Regional coordination","Urgent request guidance"].map((item,i)=><span key={item}><i className={i===0?"primary":""}/>{item}</span>)}
     </section>
 
     <section className="premiumIntro">
@@ -96,6 +96,6 @@ export default function PremiumHome(){
 
     <RegionalNetwork/>
 
-    <section className="premiumFinalCta"><div><p className="eyebrow">Start an operational brief</p><h2>Planning travel or operations in Africa?</h2><p>Share the country, city, dates, traveller profile and required support. Our team will review the request before confirming scope and availability.</p></div><div><a className="button primary" href="/contact">Request consultation</a><a className="button secondary" href="/client-portal">Track an existing request</a></div></section>
+    <section className="premiumFinalCta"><div><p className="eyebrow">Start an operational brief</p><h2>Planning travel or operations in West Africa?</h2><p>Share the country, city, dates, traveller profile and required support. Our team will review the request before confirming scope and availability.</p></div><div><a className="button primary" href="https://wa.me/15028539373?text=Hello%2C%20I%20would%20like%20to%20request%20security%20services%20in%20West%20Africa.%20Please%20contact%20me%20with%20further%20details." target="_blank" rel="noopener noreferrer">Request consultation</a><a className="button secondary" href="/client-portal">Track an existing request</a></div></section>
   </main>;
 }
