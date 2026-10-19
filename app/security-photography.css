@@ -1,0 +1,70 @@
+/* Sector-specific editorial photography for Africa Security Solutions.
+   All photographs are Unsplash-licensed stock imagery, not company staff or assets.
+   Sources: Chad Nathan / 2b7thBC3Cf8; Dimitris Asproloupos / BzG-4gZVOHU;
+   Yucel M / 67kFlWBNc6w; Collin / 8FxJi5wuwKc;
+   Johan Milson Kamaong / TAZKMczxJbQ; Johannes Blenke / WknOx0jEMQE.
+   Photographs illustrate service categories; they are not operational claims. */
+
+.premiumHero.heroV2 {
+  background:
+    linear-gradient(90deg,rgba(3,6,7,.91) 0%,rgba(3,6,7,.73) 42%,rgba(3,6,7,.20) 100%),
+    url('https://images.unsplash.com/photo-1762474293029-6a7f3698312c?auto=format&fit=crop&w=2200&q=84') center 38% / cover no-repeat !important;
+}
+
+.cinematicHero.slide1 .cinematicSceneImage {
+  background-image: url('https://images.unsplash.com/photo-1762474293029-6a7f3698312c?auto=format&fit=crop&w=2200&q=84') !important;
+}
+.cinematicHero.slide2 .cinematicSceneImage {
+  background-image: url('https://images.unsplash.com/photo-1747745433340-98ff571466b4?auto=format&fit=crop&w=2200&q=84') !important;
+}
+.cinematicHero.slide3 .cinematicSceneImage {
+  background-image: url('https://images.unsplash.com/photo-1551650921-1cf9ec0c9650?auto=format&fit=crop&w=2200&q=84') !important;
+}
+.cinematicHero.slide4 .cinematicSceneImage {
+  background-image: url('https://images.unsplash.com/photo-1662242723207-13ad21d3816f?auto=format&fit=crop&w=2200&q=84') !important;
+}
+.cinematicSceneImage {
+  filter: saturate(.84) contrast(1.06) brightness(.93) !important;
+}
+.cinematicScene::after {
+  background:
+    linear-gradient(90deg,rgba(3,5,5,.92) 0%,rgba(3,5,5,.75) 40%,rgba(3,5,5,.24) 78%),
+    linear-gradient(0deg,rgba(3,5,5,.72),transparent 55%) !important;
+}
+
+.serviceExecutive, .executiveVisual {
+  background-image:
+    linear-gradient(180deg,rgba(3,5,6,.04),rgba(3,5,6,.65)),
+    url('https://images.unsplash.com/photo-1762474293029-6a7f3698312c?auto=format&fit=crop&w=1600&q=82') !important;
+  background-position: center 35%;
+}
+.serviceAirport, .airportVisual {
+  background-image:
+    linear-gradient(180deg,rgba(3,5,6,.04),rgba(3,5,6,.70)),
+    url('https://images.unsplash.com/photo-1747745433340-98ff571466b4?auto=format&fit=crop&w=1600&q=82') !important;
+  background-position: center;
+}
+.serviceTransport, .transportVisual {
+  background-image:
+    linear-gradient(180deg,rgba(3,5,6,.06),rgba(3,5,6,.72)),
+    url('https://images.unsplash.com/photo-1551650921-1cf9ec0c9650?auto=format&fit=crop&w=1600&q=82') !important;
+  background-position: center;
+}
+.serviceCorporate, .serviceCorporateHero {
+  background-image:
+    linear-gradient(180deg,rgba(3,5,6,.05),rgba(3,5,6,.72)),
+    url('https://images.unsplash.com/photo-1485230405346-71acb9518d9c?auto=format&fit=crop&w=1600&q=82') !important;
+  background-position: center;
+}
+.serviceJourney, .serviceJourneyHero {
+  background-image:
+    linear-gradient(180deg,rgba(3,5,6,.05),rgba(3,5,6,.73)),
+    url('https://images.unsplash.com/photo-1662242723207-13ad21d3816f?auto=format&fit=crop&w=1600&q=82') !important;
+  background-position: center;
+}
+.serviceConsulting, .serviceConsultingHero {
+  background-image:
+    linear-gradient(180deg,rgba(3,5,6,.05),rgba(3,5,6,.75)),
+    url('https://images.unsplash.com/photo-1752171558159-a39940b3d142?auto=format&fit=crop&w=1600&q=82') !important;
+  background-position: center;
+}
