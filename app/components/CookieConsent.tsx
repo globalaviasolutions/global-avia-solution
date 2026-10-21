@@ -7,38 +7,87 @@ import { sanitizeAnalyticsEvent } from "../lib/leadAnalytics";
 
 type Consent = "accepted" | "essential" | null;
 const STORAGE_KEY = "ass-cookie-consent";
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[][];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+function pageView() {
+  if (!window.gtag || !GA_ID) return;
+  window.gtag("event", "page_view", {
+    page_location: window.location.href,
+    page_title: document.title,
+    page_path: window.location.pathname + window.location.search,
+    send_to: GA_ID,
+  });
+}
 
 function loadAnalytics(measurementId: string) {
   if (document.getElementById("google-analytics-script")) return;
 
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = (...args: unknown[]) => {
+    window.dataLayer!.push(args);
+  };
+  window.gtag("js", new Date());
+  window.gtag("config", measurementId, { anonymize_ip: true, send_page_view: false });
+  pageView();
+
   const script = document.createElement("script");
   script.id = "google-analytics-script";
   script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
   document.head.appendChild(script);
-
-  const config = document.createElement("script");
-  config.id = "google-analytics-config";
-  config.text = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${measurementId}',{anonymize_ip:true});`;
-  document.head.appendChild(config);
 }
 
 export default function CookieConsent() {
   const [consent, setConsent] = useState<Consent>(null);
   const [ready, setReady] = useState(false);
-  const measurementId = process.env.NEXT_PUBLIC_GA_ID;
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY) as Consent;
     setConsent(stored === "accepted" || stored === "essential" ? stored : null);
     setReady(true);
-    if (stored === "accepted" && measurementId) loadAnalytics(measurementId);
-  }, [measurementId]);
+    if (stored === "accepted" && GA_ID) loadAnalytics(GA_ID);
+  }, []);
+
+  useEffect(() => {
+    if (consent !== "accepted" || !GA_ID) return;
+    let lastUrl = window.location.href;
+    const trackNavigation = () => {
+      const nextUrl = window.location.href;
+      if (nextUrl === lastUrl) return;
+      lastUrl = nextUrl;
+      pageView();
+    };
+    const originalPushState = history.pushState;
+    const originalReplaceState = history.replaceState;
+    history.pushState = function (...args) {
+      const result = originalPushState.apply(this, args);
+      trackNavigation();
+      return result;
+    };
+    history.replaceState = function (...args) {
+      const result = originalReplaceState.apply(this, args);
+      trackNavigation();
+      return result;
+    };
+    window.addEventListener("popstate", trackNavigation);
+    return () => {
+      history.pushState = originalPushState;
+      history.replaceState = originalReplaceState;
+      window.removeEventListener("popstate", trackNavigation);
+    };
+  }, [consent]);
 
   function save(choice: Exclude<Consent, null>) {
     window.localStorage.setItem(STORAGE_KEY, choice);
     setConsent(choice);
-    if (choice === "accepted" && measurementId) loadAnalytics(measurementId);
+    if (choice === "accepted" && GA_ID) loadAnalytics(GA_ID);
     if (choice === "essential" && consent === "accepted") window.location.reload();
   }
 
@@ -49,26 +98,22 @@ export default function CookieConsent() {
   }, []);
 
   if (!ready) return null;
-
   return (
     <>
-    {consent === "accepted" && <><Analytics beforeSend={sanitizeAnalyticsEvent} /><LeadTracking /></>}
-    {!consent && (
-    <aside className="cookieBanner" role="dialog" aria-label="Cookie preferences" aria-live="polite">
-      <div>
-        <p className="cookieEyebrow">Privacy choices</p>
-        <h2>We respect your privacy.</h2>
-        <p>
-          Essential storage keeps the website working. Optional Google and Vercel analytics help us understand website usage and are loaded only after consent.
-          Read our <a href="/privacy">Privacy Policy</a>.
-        </p>
-      </div>
-      <div className="cookieActions">
-        <button type="button" className="button secondary" onClick={() => save("essential")}>Essential only</button>
-        <button type="button" className="button primary" onClick={() => save("accepted")}>Accept analytics</button>
-      </div>
-    </aside>
-    )}
+      {consent === "accepted" && <><Analytics beforeSend={sanitizeAnalyticsEvent} /><LeadTracking /></>}
+      {!consent && (
+        <aside className="cookieBanner" role="dialog" aria-label="Cookie preferences" aria-live="polite">
+          <div>
+            <p className="cookieEyebrow">Privacy choices</p>
+            <h2>We respect your privacy.</h2>
+            <p>Essential storage keeps the website working. Optional Google and Vercel analytics help us understand website usage and are loaded only after consent. Read our <a href="/privacy">Privacy Policy</a>.</p>
+          </div>
+          <div className="cookieActions">
+            <button type="button" className="button secondary" onClick={() => save("essential")}>Essential only</button>
+            <button type="button" className="button primary" onClick={() => save("accepted")}>Accept analytics</button>
+          </div>
+        </aside>
+      )}
     </>
   );
 }
