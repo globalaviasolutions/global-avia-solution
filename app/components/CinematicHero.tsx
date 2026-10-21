@@ -40,9 +40,6 @@ export default function CinematicHero(){
         <div className="cinematicPanelLinks"><a href="/operations-center">Open Operations Centre →</a><a href="/coverage">View regional coverage →</a></div>
       </aside>
 
-      <div className="cinematicFloatCard cardProtection"><span>01</span><strong>Executive Protection</strong></div>
-      <div className="cinematicFloatCard cardAviation"><span>02</span><strong>Airport & Crew Security</strong></div>
-      <div className="cinematicFloatCard cardJourney"><span>03</span><strong>Journey Management</strong></div>
       <div className="cinematicScroll"><i/>Explore the platform</div>
     </section>
   </>;
