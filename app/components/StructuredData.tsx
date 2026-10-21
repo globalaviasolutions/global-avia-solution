@@ -5,7 +5,7 @@ export default function StructuredData() {
     "@id": "https://security-solutions.africa/#organization",
     name: "Africa Security Solutions",
     url: "https://security-solutions.africa",
-    logo: "https://security-solutions.africa/logo.svg",
+    logo: "https://security-solutions.africa/brand-horizontal.png",
     email: "info@security-solutions.africa",
     contactPoint: [{"@type":"ContactPoint",contactType:"customer enquiries",email:"info@security-solutions.africa",availableLanguage:["English"]}],
     description:
@@ -24,7 +24,7 @@ export default function StructuredData() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": [data, { "@type": "WebSite", "@id": "https://security-solutions.africa/#website", url: "https://security-solutions.africa/", name: "Africa Security Solutions", publisher: { "@id": data["@id"] }, inLanguage: "en" }] }).replace(/</g, "\\u003c") }}
     />
   );
 }

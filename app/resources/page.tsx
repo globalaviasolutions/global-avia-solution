@@ -1,9 +1,11 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/resources", {
   title: "Security Resources Centre",
   description: "Practical security planning guides for executive travel, airport arrivals, crews, journeys and corporate operations in Nigeria and West Africa.",
-};
+});
 
 const resources = [
   ["Travel Security", "Nigeria travel security planning", "A practical framework for preparing travellers, routes, communications and contingencies before arrival.", "travel-security"],
@@ -14,7 +16,7 @@ const resources = [
   ["Crisis Preparation", "Urgent response information", "The minimum information needed when requesting urgent operational review or incident coordination.", "/emergency-response"],
 ];
 
-export default function ResourcesPage(){return <main>
+export default function ResourcesPage(){return <main><PageStructuredData path="/resources" metadata={metadata} />
 <header className="siteHeader enterpriseHeader"><a className="brand" href="/"><img src="/logo.svg" alt="Africa Security Solutions" /></a><nav><a href="/services">Services</a><a href="/industries">Industries</a><a href="/coverage">West Africa</a><a href="/resources">Resources</a><a href="/about#standards">Standards</a><a href="/contact">Contact</a><a className="navCta" href="/contact">Request Consultation</a></nav></header>
 <section className="enterpriseHero resourcesHero"><div className="serviceHeroOverlay"/><div className="serviceHeroContent"><nav className="breadcrumbs"><a href="/">Home</a><span>›</span><span>Resources</span></nav><p className="eyebrow">Resources centre</p><h1>Practical guidance for security-conscious operations.</h1><p className="lead">Planning notes, checklists and operational frameworks for organisations and travellers preparing movements across Nigeria and West Africa.</p></div></section>
 <section className="enterpriseIntro"><div><p className="eyebrow">Planning library</p><h2>Useful before the first operational call.</h2></div><p>Resources provide general preparation guidance only. They do not replace a location-specific risk assessment, legal advice or a confirmed service plan.</p></section>

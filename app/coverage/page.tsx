@@ -1,17 +1,19 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import type { Metadata } from "next";
 import InteractiveNigeriaMap from "../components/InteractiveNigeriaMap";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/coverage", {
   title: "Security Coverage in Nigeria and West Africa",
   description:
     "Explore Africa Security Solutions coverage in Nigeria and our regional coordination model for selected assignments across West Africa.",
-};
+});
 
 const regionalMarkets = ["Ghana", "Côte d’Ivoire", "Senegal", "Benin", "Cameroon"];
 
 export default function CoveragePage() {
   return (
-    <main>
+    <main><PageStructuredData path="/coverage" metadata={metadata} />
       <header className="siteHeader enterpriseHeader">
         <a className="brand" href="/" aria-label="Africa Security Solutions home"><img src="/logo.svg" alt="Africa Security Solutions" /></a>
         <nav><a href="/services">Services</a><a href="/industries">Industries</a><a href="/coverage">Coverage</a><a href="/locations">Locations</a><a href="/resources">Resources</a><a href="/contact">Contact</a><a className="navCta" href="/contact">Plan an Operation</a></nav>

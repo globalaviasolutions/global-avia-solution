@@ -24,7 +24,7 @@ export default function LocationPage({ city, eyebrow, title, intro, heroClass, f
       "@context":"https://schema.org", "@type":"BreadcrumbList",
       itemListElement:[
         {"@type":"ListItem",position:1,name:"Home",item:"https://security-solutions.africa/"},
-        {"@type":"ListItem",position:2,name:"Locations",item:"https://security-solutions.africa/locations"},
+        {"@type":"ListItem",position:2,name:"West Africa Coverage",item:"https://security-solutions.africa/coverage"},
         {"@type":"ListItem",position:3,name:city,item:`https://security-solutions.africa/locations/${city.toLowerCase().replace(/ /g,"-")}`},
       ],
     })}} />

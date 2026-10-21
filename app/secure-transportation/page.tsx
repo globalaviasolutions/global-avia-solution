@@ -1,13 +1,15 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import ServicePage from "../components/ServicePage";
 
-export const metadata = {
+export const metadata = pageMetadata("/secure-transportation", {
   title: "Secure Transportation in Lagos & Nigeria",
   alternates: { canonical: "/secure-transportation" },
   description: "Secure airport transfers, professional drivers, route planning, and journey management for clients operating in Nigeria.",
-};
+});
 
 export default function SecureTransportationPage() {
-  return (
+  return (<> <PageStructuredData path="/secure-transportation" metadata={metadata} />
     <ServicePage
       eyebrow="Secure mobility · Nigeria"
       title="Secure Transportation"
@@ -32,5 +34,5 @@ export default function SecureTransportationPage() {
         "Corporate Groups",
       ]}
     />
-  );
+  </>);
 }

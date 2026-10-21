@@ -1,9 +1,11 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/emergency-response", {
   title: "Emergency Response Requests",
   description: "Submit urgent security coordination, journey recovery and incident support requests across West Africa.",
-};
+});
 
 const capabilities = [
   ["01", "Urgent operational review", "Rapid assessment of location, people affected, immediate exposure and available communication channels."],
@@ -15,7 +17,7 @@ const capabilities = [
 ];
 
 export default function EmergencyResponsePage() {
-  return <main>
+  return <main><PageStructuredData path="/emergency-response" metadata={metadata} />
     <header className="siteHeader enterpriseHeader"><a className="brand" href="/"><img src="/logo.svg" alt="Africa Security Solutions" /></a><nav><a href="/services">Services</a><a href="/coverage">Coverage</a><a href="/locations">Locations</a><a href="/resources">Resources</a><a href="/standards">Standards</a><a href="/contact">Contact</a><a className="emergencyNav" href="https://wa.me/15028539373?text=Hello%2C%20I%20would%20like%20to%20request%20security%20services%20in%20West%20Africa.%20Please%20contact%20me%20with%20further%20details." target="_blank" rel="noopener noreferrer">Urgent Request</a></nav></header>
     <section className="enterpriseHero emergencyHero"><div className="serviceHeroOverlay"/><div className="serviceHeroContent"><nav className="breadcrumbs"><a href="/">Home</a><span>›</span><span>Emergency Response</span></nav><p className="eyebrow emergencyEyebrow">Urgent operational requests</p><h1>Clear information. Rapid assessment. Controlled coordination.</h1><p className="lead">This channel is intended for urgent security and movement requests. Assistance remains subject to communication, lawful availability, operational feasibility and written confirmation.</p><div className="actions"><a className="button emergencyButton" href="https://wa.me/15028539373?text=Hello%2C%20I%20would%20like%20to%20request%20security%20services%20in%20West%20Africa.%20Please%20contact%20me%20with%20further%20details." target="_blank" rel="noopener noreferrer">Submit urgent request</a><a className="button secondary" href="mailto:info@security-solutions.africa?subject=URGENT%20Operational%20Request">Email urgent details</a></div></div></section>
     <section className="urgentNotice"><strong>Important</strong><p>This website is not a replacement for police, fire, ambulance or other public emergency services. Contact the appropriate local authority first where there is an immediate threat to life.</p></section>

@@ -1,10 +1,12 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/industries", {
   title: "Industries",
   description:
     "Security support for aviation, energy, diplomatic, corporate travel, construction and hospitality operations across Nigeria and West Africa.",
-};
+});
 
 const industries = [
   ["Aviation", "aviation", "Airport, crew, passenger and ground-movement security coordination."],
@@ -17,7 +19,7 @@ const industries = [
 
 export default function IndustriesPage() {
   return (
-    <main>
+    <main><PageStructuredData path="/industries" metadata={metadata} />
       <header className="siteHeader">
         <a className="brand" href="/"><img src="/logo.svg" alt="Africa Security Solutions" /></a>
         <nav><a href="/#services">Services</a><a href="/industries">Industries</a><a href="/#coverage">Coverage</a><a href="/about">About</a><a href="/contact">Contact</a><a className="navCta" href="/contact">Request Protection</a></nav>

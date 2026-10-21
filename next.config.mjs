@@ -145,6 +145,7 @@ const nextConfig = {
     ];
 
     return [
+      ...["/api/:path*", "/client-portal", "/operations-dashboard", "/contractor-response"].map(source => ({ source, headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] })),
       {
         source: "/(.*)",
         headers: securityHeaders,

@@ -1,13 +1,15 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/about", {
   title: "About Africa Security Solutions",
   description: "Learn about Africa Security Solutions and our approach to executive protection, secure mobility, aviation support, and risk management across Nigeria and West Africa.",
-};
+});
 
 export default function AboutPage() {
   return (
-    <main>
+    <main><PageStructuredData path="/about" metadata={metadata} />
       <header className="siteHeader">
         <a className="brand" href="/"><img src="/logo.svg" alt="Africa Security Solutions" /></a>
         <nav><a href="/#services">Services</a><a href="/#coverage">Coverage</a><a href="/about">About</a><a href="/contact">Contact</a><a className="navCta" href="/contact">Request Protection</a></nav>

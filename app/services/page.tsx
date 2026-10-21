@@ -1,9 +1,11 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/services", {
   title: "Security Services",
   description: "Explore executive protection, airport and crew security, secure transportation, corporate security, journey management and security consulting across Nigeria and West Africa.",
-};
+});
 
 const services = [
   { title: "Executive Protection", href: "/executive-protection", code: "01", summary: "Discreet close protection for executives, diplomats, VIP guests and international teams.", bestFor: "Executive visits, delegations and high-profile movements", features: ["Protective advance", "Close protection", "Venue coordination", "Secure movements"] },
@@ -28,7 +30,7 @@ export default function ServicesPage() {
   };
 
   return (
-    <main>
+    <main><PageStructuredData path="/services" metadata={metadata} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <header className="siteHeader">
         <a className="brand" href="/" aria-label="Africa Security Solutions home"><img src="/logo.svg" alt="Africa Security Solutions" /></a>

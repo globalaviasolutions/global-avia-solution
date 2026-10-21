@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   keywords:["security services West Africa","executive protection Nigeria","secure transportation Lagos","airport crew security","journey management Africa","corporate security Nigeria"],
   authors:[{name:"Africa Security Solutions"}],creator:"Africa Security Solutions",publisher:"Africa Security Solutions",category:"Business Services",
   icons:{icon:"/brand-icon.png",shortcut:"/brand-icon.png",apple:"/brand-icon.png"},appleWebApp:{capable:true,title:"Africa Security",statusBarStyle:"black-translucent"},
-  formatDetection:{telephone:false,email:false,address:false},robots:{index:true,follow:true,googleBot:{index:true,follow:true,"max-image-preview":"large","max-snippet":-1,"max-video-preview":-1}},
+  formatDetection:{telephone:false,email:false,address:false},robots:{index:true,follow:true,"max-image-preview":"large","max-snippet":-1,"max-video-preview":-1},
   openGraph:{title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",url:"https://security-solutions.africa",siteName:"Africa Security Solutions",images:[{url:"/opengraph-image",width:1200,height:630,alt:"Africa Security Solutions"}],locale:"en_GB",type:"website"},
   twitter:{card:"summary_large_image",title:"Africa Security Solutions",description:"Securing Africa. Protecting global business.",images:["/opengraph-image"]},
   verification:{google:"ZP2dGhYt2g5i-iRSQ7jnlybSaiOJY6K5HRHQkcQotmc"},

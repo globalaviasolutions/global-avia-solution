@@ -1,13 +1,15 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import ServicePage from "../components/ServicePage";
 
-export const metadata = {
+export const metadata = pageMetadata("/airport-crew-security", {
   title: "Airport & Crew Security Services in Nigeria",
   alternates: { canonical: "/airport-crew-security" },
   description: "Airport coordination, crew protection, secure hotel transfers, and aviation security support across Nigeria.",
-};
+});
 
 export default function AirportCrewSecurityPage() {
-  return (
+  return (<> <PageStructuredData path="/airport-crew-security" metadata={metadata} />
     <ServicePage
       eyebrow="Aviation security · Nigeria"
       title="Airport & Crew Security"
@@ -32,5 +34,5 @@ export default function AirportCrewSecurityPage() {
         "Airline Management",
       ]}
     />
-  );
+  </>);
 }

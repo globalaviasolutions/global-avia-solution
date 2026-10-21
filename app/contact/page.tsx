@@ -1,15 +1,17 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import type { Metadata } from "next";
 import ContactForm from "../components/ContactForm";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/contact", {
   title: "Contact Africa Security Solutions",
   description: "Request executive protection, secure transportation, airport and crew security, corporate security or risk consulting across Nigeria and West Africa.",
   alternates: { canonical: "/contact" },
-};
+});
 
 export default function ContactPage() {
   return (
-    <main id="main-content">
+    <main id="main-content"><PageStructuredData path="/contact" metadata={metadata} />
       <section className="serviceHero contactHero">
         <div className="serviceHeroOverlay" />
         <div className="serviceHeroContent">

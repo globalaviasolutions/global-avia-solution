@@ -1,13 +1,15 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import ServicePage from "../components/ServicePage";
 
-export const metadata = {
+export const metadata = pageMetadata("/executive-protection", {
   title: "Executive Protection Services in Nigeria",
   alternates: { canonical: "/executive-protection" },
   description: "Discreet executive protection for international visitors, corporate leaders, diplomats, and VIP guests operating in Nigeria.",
-};
+});
 
 export default function ExecutiveProtectionPage() {
-  return (
+  return (<> <PageStructuredData path="/executive-protection" metadata={metadata} />
     <ServicePage
       eyebrow="Executive protection · Nigeria"
       title="Executive Protection Services in Nigeria"
@@ -32,5 +34,5 @@ export default function ExecutiveProtectionPage() {
         "Visiting Delegations",
       ]}
     />
-  );
+  </>);
 }

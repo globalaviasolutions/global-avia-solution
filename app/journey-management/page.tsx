@@ -1,14 +1,16 @@
+import PageStructuredData from "../components/PageStructuredData";
+import { pageMetadata } from "../lib/seo";
 import type { Metadata } from "next";
 import ServicePage from "../components/ServicePage";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/journey-management", {
   title: "Journey Management Services in Nigeria",
   alternates: { canonical: "/journey-management" },
   description: "Route assessment, movement coordination, travel briefings, tracking, and contingency planning across Nigeria.",
-};
+});
 
 export default function JourneyManagementPage() {
-  return (
+  return (<> <PageStructuredData path="/journey-management" metadata={metadata} />
     <ServicePage
       eyebrow="Journey Management Nigeria"
       title="Journey Management"
@@ -17,5 +19,5 @@ export default function JourneyManagementPage() {
       features={["Route assessment", "Travel security briefings", "Driver coordination", "Movement monitoring", "Check-in procedures", "Alternative route planning", "Incident escalation", "Emergency support"]}
       audiences={["Energy Teams", "NGOs", "Executives", "Aviation Crews", "Project Personnel", "International Visitors"]}
     />
-  );
+  </>);
 }
