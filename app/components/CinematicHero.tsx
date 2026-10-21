@@ -34,11 +34,7 @@ export default function CinematicHero(){
       </div>
 
 
-      <aside className="cinematicOperations">
-        <div className="cinematicPanelHead"><span><i/>Operations overview</span><small>Assignment-based model</small></div>
-        <div className="cinematicPanelRows"><div><span>Operating focus</span><strong>West Africa</strong></div><div><span>Regional capability</span><strong>West Africa</strong></div><div><span>Selected service</span><strong>{active.eyebrow}</strong></div></div>
-        <div className="cinematicPanelLinks"><a href="/operations-center">Open Operations Centre →</a><a href="/coverage">View regional coverage →</a></div>
-      </aside>
+
 
       <div className="cinematicScroll"><i/>Explore the platform</div>
     </section>
