@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Analytics } from "@vercel/analytics/next";
+import LeadTracking from "./LeadTracking";
+import { sanitizeAnalyticsEvent } from "../lib/leadAnalytics";
 
 type Consent = "accepted" | "essential" | null;
 const STORAGE_KEY = "ass-cookie-consent";
@@ -50,7 +52,7 @@ export default function CookieConsent() {
 
   return (
     <>
-    {consent === "accepted" && <Analytics />}
+    {consent === "accepted" && <><Analytics beforeSend={sanitizeAnalyticsEvent} /><LeadTracking /></>}
     {!consent && (
     <aside className="cookieBanner" role="dialog" aria-label="Cookie preferences" aria-live="polite">
       <div>

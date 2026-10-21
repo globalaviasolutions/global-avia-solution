@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { trackLeadEvent } from "../lib/leadAnalytics";
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 type ContactResult = { message?: string; reference?: string; notificationEmailSent?: boolean; emailConfirmationSent?: boolean };
@@ -47,6 +48,7 @@ export default function ContactForm(){
     try{
       const response=await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
       const result=(await response.json()) as ContactResult;if(!response.ok)throw new Error(result.message||"Unable to send the request.");
+      trackLeadEvent("contact_request_success", String(data.get("service") || ""));
       setSubmittedEmail(email);setStatus("success");setReference(result.reference||"");setMessage(result.message||"Your request has been recorded.");setNotificationEmailSent(result.notificationEmailSent===true);setEmailConfirmationSent(result.emailConfirmationSent===true);
       form.reset();startedAt.current=Date.now();window.scrollTo({top:form.getBoundingClientRect().top+window.scrollY-120,behavior:"smooth"});
     }catch(error){setStatus("error");setMessage(error instanceof Error?error.message:"Unable to send the request.")}
