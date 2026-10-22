@@ -34,8 +34,8 @@ function loadAnalytics(measurementId: string) {
     window.dataLayer!.push(args);
   };
   window.gtag("js", new Date());
-  window.gtag("config", measurementId, { anonymize_ip: true, send_page_view: false });
-  pageView();
+  // Let GA4 send the initial page_view after consent; SPA navigation remains tracked separately.
+  window.gtag("config", measurementId, { anonymize_ip: true });
 
   const script = document.createElement("script");
   script.id = "google-analytics-script";
