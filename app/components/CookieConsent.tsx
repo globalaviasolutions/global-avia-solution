@@ -11,7 +11,7 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 declare global {
   interface Window {
-    dataLayer?: unknown[][];
+    dataLayer?: IArguments[];
     gtag?: (...args: unknown[]) => void;
   }
 }
@@ -30,8 +30,10 @@ function loadAnalytics(measurementId: string) {
   if (document.getElementById("google-analytics-script")) return;
 
   window.dataLayer = window.dataLayer || [];
-  window.gtag = (...args: unknown[]) => {
-    window.dataLayer!.push(args);
+  // Google's standard gtag bootstrap queues the native arguments object.
+  // This is important for compatibility with the Google tag event processor.
+  window.gtag = function () {
+    window.dataLayer!.push(arguments);
   };
   window.gtag("js", new Date());
   // Let GA4 send the initial page_view after consent; SPA navigation remains tracked separately.
