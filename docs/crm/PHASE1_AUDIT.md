@@ -46,3 +46,14 @@ No production SQL should be executed from this document.
 - Security note: RLS enabled with no policies denies ordinary API roles by default; service_role bypasses RLS. Do not expose service_role or introduce permissive catch-all policies.
 - Data integrity note: avoid deletion of client_requests in migration because of cascading child deletion. Additive ownership links only.
 - Next gates: inspect indexes/triggers, Auth configuration, storage bucket policies, backup/restore, then create staging-only executable migration.
+
+## Production index inventory (read-only, user-provided)
+- 29 indexes across 9 public tables.
+- client_requests: PK(id), UNIQUE(reference), lookup btree(reference,email). No standalone email index.
+- request_history and operation_timeline: btree(reference, timestamp DESC).
+- assignment_documents: btree(reference,created_at DESC), UNIQUE(storage_path).
+- contractor_dispatches: btree(contractor_id), btree(reference,created_at DESC), btree(status), UNIQUE(token_hash).
+- contractors: company_name and email indexes plus UNIQUE(lower(trim(email))).
+- assignments: UNIQUE(reference) and an additional btree(reference), possibly redundant; do not drop without workload analysis.
+- New ownership tables should index user_id and organization_id separately. Do not rely on existing (reference,email) index for listing a user's requests.
+- Next read-only checks: triggers (including auth schema), relevant auth settings, storage buckets/policies, and backup/restore readiness. Do not copy sensitive trigger function bodies or secrets into tickets.
