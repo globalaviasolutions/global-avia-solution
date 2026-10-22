@@ -57,3 +57,9 @@ No production SQL should be executed from this document.
 - assignments: UNIQUE(reference) and an additional btree(reference), possibly redundant; do not drop without workload analysis.
 - New ownership tables should index user_id and organization_id separately. Do not rely on existing (reference,email) index for listing a user's requests.
 - Next read-only checks: triggers (including auth schema), relevant auth settings, storage buckets/policies, and backup/restore readiness. Do not copy sensitive trigger function bodies or secrets into tickets.
+
+## Trigger inspection (production read-only)
+- information_schema.triggers returned no rows for public/auth.
+- pg_trigger joined to pg_class/pg_namespace, filtering public/auth and NOT tgisinternal, also returned no rows.
+- No non-internal triggers detected in those schemas at time of inspection. Internal triggers (including FK enforcement) were intentionally excluded.
+- No database changes authorized. Next: prepare additive staging-only migration and security test plan; do not run against production.
