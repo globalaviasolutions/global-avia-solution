@@ -36,3 +36,13 @@ Scope: business organizations and individual clients. No production migration is
 7. Feature flag enablement in preview, monitored canary rollout, explicit production approval.
 
 No production SQL should be executed from this document.
+
+## Confirmed from production read-only SQL (2026-10-22)
+- Nine public tables: assignment_documents, assignment_team, assignments, client_requests, contractor_dispatches, contractors, operation_timeline, request_history, team_members.
+- All nine have RLS enabled; zero public policies returned by pg_policies.
+- Seven FKs: assignment_documents.reference, assignment_team.reference, assignments.reference, contractor_dispatches.reference, operation_timeline.reference -> client_requests.reference (ON DELETE CASCADE); assignment_team.team_member_id -> team_members.id (ON DELETE CASCADE); contractor_dispatches.contractor_id -> contractors.id (ON DELETE CASCADE).
+- client_requests.reference has a unique constraint; assignments.reference also unique.
+- Existing table definitions were supplied by user from information_schema; no customer data inspected.
+- Security note: RLS enabled with no policies denies ordinary API roles by default; service_role bypasses RLS. Do not expose service_role or introduce permissive catch-all policies.
+- Data integrity note: avoid deletion of client_requests in migration because of cascading child deletion. Additive ownership links only.
+- Next gates: inspect indexes/triggers, Auth configuration, storage bucket policies, backup/restore, then create staging-only executable migration.
